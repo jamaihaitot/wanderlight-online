@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "process",
+      "command": "dotnet",
+      "args": ["build"],
+      "options": {
+        "cwd": "${workspaceFolder}/wanderlight-online"
+      },
+      "problemMatcher": ["$msCompile"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "label": "dotnet: build"
+    }
+  ]
+}

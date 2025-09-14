@@ -1,0 +1,16 @@
+# Godot
+.godot/
+imported/
+*.import
+export_presets.cfg
+
+# C# / .NET
+bin/
+obj/
+**/*.user
+**/*.suo
+**/.vs/
+
+# VS Code
+.vscode/*.log
+.vscode/ipch/

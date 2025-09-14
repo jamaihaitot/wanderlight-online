@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Godot (Debug)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "dotnet: build",
+      "program": "C:/Godot/Godot_v4.4.1-stable_mono_win64/Godot_v4.4.1-stable_mono_win64.exe",
+      "args": ["--path", "${workspaceFolder}/wanderlight-online"],
+      "cwd": "${workspaceFolder}/wanderlight-online",
+      "console": "internalConsole"
+    },
+    {
+      "name": "Launch Godot (Release)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "dotnet: build",
+      "program": "${env:godot}",
+      "args": ["--path", "${workspaceFolder}/wanderlight-online"],
+      "cwd": "${workspaceFolder}/wanderlight-online",
+      "console": "internalConsole"
+    }
+  ]
+}
