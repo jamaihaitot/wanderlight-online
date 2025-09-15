@@ -14,6 +14,21 @@
         "isDefault": true
       },
       "label": "dotnet: build"
+    },
+    {
+      "label": "dotnet: format",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+        "format",
+        "--severity",
+        "info",
+        "--verify-no-changes"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/wanderlight-online"
+      },
+      "problemMatcher": []
     }
   ]
 }

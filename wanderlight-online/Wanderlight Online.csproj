@@ -3,5 +3,13 @@
     <TargetFramework>net8.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>WanderlightOnline</RootNamespace>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556" PrivateAssets="All"/>
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\.editorconfig" />
+  </ItemGroup>
 </Project>

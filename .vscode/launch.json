@@ -6,7 +6,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "dotnet: build",
-      "program": "C:/Godot/Godot_v4.4.1-stable_mono_win64/Godot_v4.4.1-stable_mono_win64.exe",
+      "program": "godot",
       "args": ["--path", "${workspaceFolder}/wanderlight-online"],
       "cwd": "${workspaceFolder}/wanderlight-online",
       "console": "internalConsole"
@@ -16,7 +16,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "dotnet: build",
-      "program": "${env:godot}",
+      "program": "godot",
       "args": ["--path", "${workspaceFolder}/wanderlight-online"],
       "cwd": "${workspaceFolder}/wanderlight-online",
       "console": "internalConsole"

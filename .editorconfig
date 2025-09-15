@@ -1,7 +1,45 @@
 root = true
 
+[*]
+charset = utf-8
+
 [*.cs]
+indent_style = space
+indent_size = 4
+end_of_line = crlf
+insert_final_newline = true
 dotnet_diagnostic.CS1591.severity = none
 dotnet_diagnostic.CS0618.severity = warning
 dotnet_analyzer_diagnostic.category-Style.severity = suggestion
 dotnet_analyzer_diagnostic.severity = warning
+
+# .NET code style
+dotnet_style_qualification_for_field = false:suggestion
+dotnet_style_qualification_for_property = false:suggestion
+dotnet_style_qualification_for_method = false:suggestion
+dotnet_style_qualification_for_event = false:suggestion
+
+# C# code style
+csharp_prefer_braces = true:suggestion
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_prefer_simple_using_statement = true:suggestion
+csharp_style_namespace_declarations = file_scoped:suggestion
+
+# Newline options
+csharp_new_line_before_open_brace = all
+csharp_new_line_between_query_expression_clauses = true
+
+# Organize usings
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = true
+
+# StyleCop minimal rules
+# Disable or relax rules until codebase is ready
+# File header
+dotnet_diagnostic.SA1633.severity = none
+# Prefix 'this.'
+dotnet_diagnostic.SA1101.severity = none
+# Using directives must be placed correctly
+dotnet_diagnostic.SA1200.severity = suggestion
+# Field naming (_camelCase)
+dotnet_diagnostic.SA1309.severity = none
