@@ -20,7 +20,7 @@
 ## Phase 3.1: Setup
 
 - [ ] T001 Create Godot project structure (`Wanderlight Online`) with folders: Scripts/, Scenes/, Assets/
-- [ ] T002 Initialize Godot C# project and install Mono dependencies
+- [x] T002 Initialize Godot C# project and install Mono dependencies
 - [ ] T003 [P] Set up SpacetimeDB instance and obtain connection details
 - [ ] T004 [P] Configure linting and formatting tools for C#
 
