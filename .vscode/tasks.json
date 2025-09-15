@@ -1,34 +1,52 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "type": "process",
-      "command": "dotnet",
-      "args": ["build"],
-      "options": {
-        "cwd": "${workspaceFolder}/wanderlight-online"
-      },
-      "problemMatcher": ["$msCompile"],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "label": "dotnet: build"
-    },
-    {
-      "label": "dotnet: format",
-      "type": "process",
-      "command": "dotnet",
-      "args": [
-        "format",
-        "--severity",
-        "info",
-        "--verify-no-changes"
-      ],
-      "options": {
-        "cwd": "${workspaceFolder}/wanderlight-online"
-      },
-      "problemMatcher": []
-    }
-  ]
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "process",
+			"command": "dotnet",
+			"args": [
+				"build"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/wanderlight-online"
+			},
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"label": "dotnet: build"
+		},
+		{
+			"label": "dotnet: format",
+			"type": "process",
+			"command": "dotnet",
+			"args": [
+				"format",
+				"${workspaceFolder}/wanderlight-online/Wanderlight Online.sln",
+				"--severity",
+				"info"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/wanderlight-online"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "dotnet: format",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"format",
+				"${workspaceFolder}/wanderlight-online/Wanderlight Online.sln",
+				"--severity",
+				"info"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
 }
