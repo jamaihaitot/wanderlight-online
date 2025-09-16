@@ -1,52 +1,118 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "process",
-			"command": "dotnet",
-			"args": [
-				"build"
-			],
-			"options": {
-				"cwd": "${workspaceFolder}/wanderlight-online"
-			},
-			"problemMatcher": [
-				"$msCompile"
-			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"label": "dotnet: build"
-		},
-		{
-			"label": "dotnet: format",
-			"type": "process",
-			"command": "dotnet",
-			"args": [
-				"format",
-				"${workspaceFolder}/wanderlight-online/Wanderlight Online.sln",
-				"--severity",
-				"info"
-			],
-			"options": {
-				"cwd": "${workspaceFolder}/wanderlight-online"
-			},
-			"problemMatcher": []
-		},
-		{
-			"label": "dotnet: format",
-			"type": "shell",
-			"command": "dotnet",
-			"args": [
-				"format",
-				"${workspaceFolder}/wanderlight-online/Wanderlight Online.sln",
-				"--severity",
-				"info"
-			],
-			"isBackground": false,
-			"problemMatcher": [],
-			"group": "build"
-		}
-	]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "process",
+      "command": "dotnet",
+      "args": ["build"],
+      "options": {
+        "cwd": "${workspaceFolder}/wanderlight-online"
+      },
+      "problemMatcher": ["$msCompile"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "label": "dotnet: build"
+    },
+    {
+      "label": "dotnet: format",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+        "format",
+        "${workspaceFolder}/wanderlight-online/Wanderlight Online.sln",
+        "--severity",
+        "info"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/wanderlight-online"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "dotnet: format",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "format",
+        "${workspaceFolder}/wanderlight-online/Wanderlight Online.sln",
+        "--severity",
+        "info"
+      ],
+      "isBackground": false,
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "SpacetimeDB: Start Server",
+      "type": "shell",
+      "command": "spacetime",
+      "args": ["start"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "SpacetimeDB: Stop Server",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "Get-Process -Name 'spacetimedb-standalone' -ErrorAction SilentlyContinue | Stop-Process -Force"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "SpacetimeDB: Publish Module",
+      "type": "shell",
+      "command": "spacetime",
+      "args": ["publish", "wanderlight-server", "--project-path", "."],
+      "options": {
+        "cwd": "${workspaceFolder}/spacetime-module/wanderlight-server"
+      },
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false
+      },
+      "problemMatcher": [],
+      "dependsOn": "SpacetimeDB: Start Server"
+    },
+    {
+      "label": "SpacetimeDB: List Databases",
+      "type": "shell",
+      "command": "spacetime",
+      "args": ["list"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false
+      },
+      "problemMatcher": []
+    }
+  ]
 }
