@@ -1,118 +1,298 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "type": "process",
-      "command": "dotnet",
-      "args": ["build"],
-      "options": {
-        "cwd": "${workspaceFolder}/wanderlight-online"
-      },
-      "problemMatcher": ["$msCompile"],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "label": "dotnet: build"
-    },
-    {
-      "label": "dotnet: format",
-      "type": "process",
-      "command": "dotnet",
-      "args": [
-        "format",
-        "${workspaceFolder}/wanderlight-online/Wanderlight Online.sln",
-        "--severity",
-        "info"
-      ],
-      "options": {
-        "cwd": "${workspaceFolder}/wanderlight-online"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "dotnet: format",
-      "type": "shell",
-      "command": "dotnet",
-      "args": [
-        "format",
-        "${workspaceFolder}/wanderlight-online/Wanderlight Online.sln",
-        "--severity",
-        "info"
-      ],
-      "isBackground": false,
-      "problemMatcher": [],
-      "group": "build"
-    },
-    {
-      "label": "SpacetimeDB: Start Server",
-      "type": "shell",
-      "command": "spacetime",
-      "args": ["start"],
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "isBackground": true,
-      "group": "build",
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "new"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "SpacetimeDB: Stop Server",
-      "type": "shell",
-      "command": "powershell",
-      "args": [
-        "-Command",
-        "Get-Process -Name 'spacetimedb-standalone' -ErrorAction SilentlyContinue | Stop-Process -Force"
-      ],
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "group": "build",
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "SpacetimeDB: Publish Module",
-      "type": "shell",
-      "command": "spacetime",
-      "args": ["publish", "wanderlight-server", "--project-path", "."],
-      "options": {
-        "cwd": "${workspaceFolder}/spacetime-module/wanderlight-server"
-      },
-      "group": "build",
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false
-      },
-      "problemMatcher": [],
-      "dependsOn": "SpacetimeDB: Start Server"
-    },
-    {
-      "label": "SpacetimeDB: List Databases",
-      "type": "shell",
-      "command": "spacetime",
-      "args": ["list"],
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "group": "build",
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false
-      },
-      "problemMatcher": []
-    }
-  ]
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Godot: Build C# Project",
+			"type": "process",
+			"command": "dotnet",
+			"args": [
+				"build"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/wanderlight-online"
+			},
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false
+			}
+		},
+		{
+			"label": "Godot: Run Project",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-Command",
+				"Start-Process -FilePath 'godot' -ArgumentList '--path', '${workspaceFolder}/wanderlight-online' -NoNewWindow"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"group": "test",
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false
+			},
+			"problemMatcher": [],
+			"dependsOn": "Godot: Build C# Project"
+		},
+		{
+			"label": "Godot: Format C# Code",
+			"type": "process",
+			"command": "dotnet",
+			"args": [
+				"format",
+				"${workspaceFolder}/wanderlight-online/Wanderlight Online.sln",
+				"--severity",
+				"info"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/wanderlight-online"
+			},
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "SpacetimeDB: Start Server",
+			"type": "shell",
+			"command": "spacetime",
+			"args": [
+				"start"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"isBackground": true,
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "new"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "SpacetimeDB: Stop Server",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-Command",
+				"Get-Process -Name 'spacetimedb-standalone' -ErrorAction SilentlyContinue | Stop-Process -Force"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "SpacetimeDB: List Databases",
+			"type": "shell",
+			"command": "spacetime",
+			"args": [
+				"list"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "SpacetimeDB: Build Module",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"-c",
+				"Release"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/spacetime-module/wanderlight-server"
+			},
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false
+			},
+			"problemMatcher": [
+				"$msCompile"
+			]
+		},
+		{
+			"label": "SpacetimeDB: Publish Module",
+			"type": "shell",
+			"command": "spacetime",
+			"args": [
+				"publish",
+				"wanderlight-server",
+				"--project-path",
+				"."
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/spacetime-module/wanderlight-server"
+			},
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false
+			},
+			"problemMatcher": [],
+			"dependsOn": [
+				"SpacetimeDB: Start Server",
+				"SpacetimeDB: Build Module"
+			]
+		},
+		{
+			"label": "SpacetimeDB: Generate Client Bindings",
+			"type": "shell",
+			"command": "spacetime",
+			"args": [
+				"generate",
+				"--lang",
+				"csharp",
+				"--out-dir",
+				"${workspaceFolder}/wanderlight-online/Scripts/Generated",
+				"--project-path",
+				"${workspaceFolder}/spacetime-module/wanderlight-server"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false
+			},
+			"problemMatcher": [],
+			"dependsOn": "SpacetimeDB: Publish Module"
+		},
+		{
+			"label": "Dev: Full Setup",
+			"type": "shell",
+			"command": "echo",
+			"args": [
+				"Development environment ready! ✅"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "shared"
+			},
+			"problemMatcher": [],
+			"dependsOn": [
+				"SpacetimeDB: Generate Client Bindings",
+				"Godot: Build C# Project"
+			],
+			"dependsOrder": "sequence"
+		},
+		{
+			"label": "Dev: Quick Restart",
+			"type": "shell",
+			"command": "echo",
+			"args": [
+				"SpacetimeDB module republished! ✅"
+			],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true
+			},
+			"problemMatcher": [],
+			"dependsOn": [
+				"SpacetimeDB: Stop Server",
+				"SpacetimeDB: Publish Module"
+			],
+			"dependsOrder": "sequence"
+		},
+		{
+			"label": "Build: Full Project",
+			"type": "shell",
+			"command": "echo",
+			"args": [
+				"All projects built successfully! ✅"
+			],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true
+			},
+			"problemMatcher": [],
+			"dependsOn": [
+				"SpacetimeDB: Build Module",
+				"Godot: Build C# Project"
+			],
+			"dependsOrder": "parallel"
+		},
+		{
+			"label": "Test Echo",
+			"type": "shell",
+			"command": "echo",
+			"args": [
+				"Testing task execution"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Task Test",
+			"type": "shell",
+			"command": "echo",
+			"args": [
+				"Task system working!"
+			],
+			"group": "test"
+		},
+		{
+			"label": "Task System Test",
+			"type": "shell",
+			"command": "echo",
+			"args": [
+				"Testing VS Code task system"
+			],
+			"group": "test"
+		},
+		{
+			"label": "Test Godot Build",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"build"
+			],
+			"group": "build"
+		}
+	]
 }
