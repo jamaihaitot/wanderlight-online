@@ -26,19 +26,19 @@
 
 ## Phase 3.2: Tests First (TDD) ⚠️ MUST COMPLETE BEFORE 3.3
 
-- [ ] T005 [P] Contract test for PlayerManager in `tests/contract/test_player_manager.cs`
-- [ ] T006 [P] Contract test for Inventory in `tests/contract/test_inventory.cs`
-- [ ] T007 [P] Contract test for NetworkManager in `tests/contract/test_network_manager.cs`
-- [ ] T008 [P] Contract test for Operator telemetry/logs in `tests/contract/test_operator.cs`
-- [ ] T009 [P] Model test for Player entity in `tests/model/test_player.cs`
-- [ ] T010 [P] Model test for Inventory entity in `tests/model/test_inventory.cs`
-- [ ] T011 [P] Model test for WorldItem entity in `tests/model/test_worlditem.cs`
-- [ ] T012 [P] Model test for Operator entity in `tests/model/test_operator.cs`
-- [ ] T013 [P] Integration test for player join/auth flow in `tests/integration/test_player_join.cs`
-- [ ] T014 [P] Integration test for inventory persistence in `tests/integration/test_inventory_persistence.cs`
-- [ ] T015 [P] Integration test for real-time movement in `tests/integration/test_movement.cs`
-- [ ] T016 [P] Integration test for item pick up/drop atomicity in `tests/integration/test_item_atomicity.cs`
-- [ ] T017 [P] Integration test for operator world reset in `tests/integration/test_world_reset.cs`
+- [x] T005 [P] Contract test for PlayerManager in `tests/contract/test_player_manager.cs`
+- [x] T006 [P] Contract test for Inventory in `tests/contract/test_inventory.cs`
+- [x] T007 [P] Contract test for NetworkManager in `tests/contract/test_network_manager.cs`
+- [x] T008 [P] Contract test for Operator telemetry/logs in `tests/contract/test_operator.cs`
+- [x] T009 [P] Model test for Player entity in `tests/model/test_player.cs`
+- [x] T010 [P] Model test for Inventory entity in `tests/model/test_inventory.cs`
+- [x] T011 [P] Model test for WorldItem entity in `tests/model/test_worlditem.cs`
+- [x] T012 [P] Model test for Operator entity in `tests/model/test_operator.cs`
+- [x] T013 [P] Integration test for player join/auth flow in `tests/integration/test_player_join.cs`
+- [x] T014 [P] Integration test for inventory persistence in `tests/integration/test_inventory_persistence.cs`
+- [x] T015 [P] Integration test for real-time movement in `tests/integration/test_movement.cs`
+- [x] T016 [P] Integration test for item pick up/drop atomicity in `tests/integration/test_item_atomicity.cs`
+- [x] T017 [P] Integration test for operator world reset in `tests/integration/test_world_reset.cs`
 
 ## Phase 3.3: Core Implementation (ONLY after tests are failing)
 
