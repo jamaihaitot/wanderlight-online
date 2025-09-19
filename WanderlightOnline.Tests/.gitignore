@@ -1,0 +1,12 @@
+# Test Results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Build outputs
+bin/
+obj/
+
+# Test reports (gdUnit4)
+reports/
