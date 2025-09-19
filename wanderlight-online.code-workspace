@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "name": "Wanderlight Online",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "spacetimedb.lastUsedModulePath": "./server",
+    "spacetimedb.lastUsedOutputPath": "module_bindings"
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-dotnettools.csharp",
+      "ms-vscode.mono-debug",
+      "godotengine.godot-tools"
+    ]
+  }
+}

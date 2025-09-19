@@ -1,4 +1,11 @@
 {
   "spacetimedb.lastUsedModulePath": "./server",
-  "spacetimedb.lastUsedOutputPath": "module_bindings"
+  "spacetimedb.lastUsedOutputPath": "module_bindings",
+  "dotnet.defaultSolution": "wanderlight-online/Wanderlight Online.sln",
+  "omnisharp.defaultLaunchSolution": "wanderlight-online/Wanderlight Online.sln",
+  "files.associations": {
+    "*.cs": "csharp"
+  },
+  "editor.formatOnSave": true,
+  "csharp.semanticHighlighting.enabled": true
 }
