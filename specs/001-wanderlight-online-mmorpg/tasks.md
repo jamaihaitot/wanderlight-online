@@ -26,7 +26,9 @@
 
 ## Phase 3.2: Tests First (TDD) ⚠️ MUST COMPLETE BEFORE 3.3
 
-- [x] T005 [P] Contract test for PlayerManager in `tests/contract/test_player_manager.cs`
+**Test Execution**: Run from workspace folder with: `dotnet test "wanderlight-online/Wanderlight Online.csproj"`
+
+- [x] T005 [P] Contract test for PlayerManager in `Tests/Contract/PlayerManagerContractTests.cs`
 - [x] T006 [P] Contract test for Inventory in `tests/contract/test_inventory.cs`
 - [x] T007 [P] Contract test for NetworkManager in `tests/contract/test_network_manager.cs`
 - [x] T008 [P] Contract test for Operator telemetry/logs in `tests/contract/test_operator.cs`
@@ -42,7 +44,7 @@
 
 ## Phase 3.3: Core Implementation (ONLY after tests are failing)
 
-- [ ] T018 Implement PlayerManager class in `Scripts/PlayerManager.cs`
+- [x] T018 Implement PlayerManager class in `Scripts/PlayerManager.cs` ✅ **COMPLETED** - MVP implementation with full contract coverage
 - [ ] T019 Implement Inventory class in `Scripts/Inventory.cs`
 - [ ] T020 Implement NetworkManager class in `Scripts/NetworkManager.cs`
 - [ ] T021 Implement Operator telemetry/logs in `Scripts/Operator.cs`
