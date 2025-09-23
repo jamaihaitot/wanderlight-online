@@ -85,67 +85,53 @@ namespace WanderlightOnline
             if (string.IsNullOrWhiteSpace(itemType) || quantity <= 0)
                 return false;
 
-            // Find existing stacks of the same item type
-            var existingStacks = new List<int>();
-            for (int i = 0; i < MaxSlots; i++)
-            {
-                if (slots[i] != null && slots[i].ItemType == itemType && slots[i].Category == category)
-                {
-                    existingStacks.Add(i);
-                }
-            }
-
-            // Try to merge with existing stacks first
+            // First pass: Check if we can fit all items
+            var addPlan = new List<(int slotIndex, int amount)>();
             int remainingQuantity = quantity;
-            foreach (int slotIndex in existingStacks)
+
+            // Try to merge with existing compatible stacks first
+            for (int i = 0; i < MaxSlots && remainingQuantity > 0; i++)
             {
-                var slot = slots[slotIndex];
-                if (!slot.IsFull)
+                var slot = slots[i];
+                if (slot != null && slot.ItemType == itemType && slot.Category == category && !slot.IsFull)
                 {
                     int spaceAvailable = slot.MaxStackSize - slot.Quantity;
                     int amountToAdd = Math.Min(remainingQuantity, spaceAvailable);
+                    addPlan.Add((i, amountToAdd));
                     remainingQuantity -= amountToAdd;
                 }
             }
 
-            // If we still have items to add, check if we can create new stacks
-            if (remainingQuantity > 0)
-            {
-                int emptySlots = GetEmptySlotCount();
-                int maxStackSize = new ItemStack("temp", 1, category).MaxStackSize;
-                int stacksNeeded = (remainingQuantity + maxStackSize - 1) / maxStackSize; // Ceiling division
-                
-                if (stacksNeeded > emptySlots)
-                    return false; // Not enough space
-            }
-
-            // If we reach here, we can fit everything - now actually add the items
-            remainingQuantity = quantity;
-            
-            // First pass: fill existing stacks
-            foreach (int slotIndex in existingStacks)
-            {
-                var slot = slots[slotIndex];
-                if (!slot.IsFull && remainingQuantity > 0)
-                {
-                    int amountAdded = slot.AddItems(remainingQuantity);
-                    remainingQuantity -= amountAdded;
-                }
-            }
-
-            // Second pass: create new stacks in empty slots
+            // Use empty slots for remaining items
             for (int i = 0; i < MaxSlots && remainingQuantity > 0; i++)
             {
                 if (slots[i] == null)
                 {
                     int maxStackSize = new ItemStack("temp", 1, category).MaxStackSize;
                     int amountForThisSlot = Math.Min(remainingQuantity, maxStackSize);
-                    slots[i] = new ItemStack(itemType, amountForThisSlot, category);
+                    addPlan.Add((i, amountForThisSlot));
                     remainingQuantity -= amountForThisSlot;
                 }
             }
 
-            return remainingQuantity == 0;
+            // If we can't fit everything, fail atomically
+            if (remainingQuantity > 0)
+                return false;
+
+            // Second pass: Actually add the items
+            foreach ((int slotIndex, int amount) in addPlan)
+            {
+                if (slots[slotIndex] == null)
+                {
+                    slots[slotIndex] = new ItemStack(itemType, amount, category);
+                }
+                else
+                {
+                    slots[slotIndex].AddItems(amount);
+                }
+            }
+
+            return true;
         }
 
         /// <summary>

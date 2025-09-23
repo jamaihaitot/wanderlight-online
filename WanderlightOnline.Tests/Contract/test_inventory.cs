@@ -19,13 +19,15 @@ namespace WanderlightOnline.Tests.Contract
             // Test capacity
             AssertThat(inventory.Capacity).IsEqual(12);
             
-            // Test consumable stacking (max 20)
+            // Test consumable stacking (max 20 per stack, multiple stacks allowed)
             AssertBool(inventory.TryAddItems("apple", 20, ItemCategory.Consumable)).IsTrue();
-            AssertBool(inventory.TryAddItems("apple", 1, ItemCategory.Consumable)).IsFalse(); // Should fail - would exceed max stack
+            AssertBool(inventory.TryAddItems("apple", 5, ItemCategory.Consumable)).IsTrue(); // Should succeed - new stack
+            AssertThat(inventory.GetItemCount("apple")).IsEqual(25);
             
-            // Test equipment stacking (max 1)
+            // Test equipment stacking (max 1 per stack, multiple stacks allowed)
             AssertBool(inventory.TryAddItems("sword", 1, ItemCategory.Equipment)).IsTrue();
-            AssertBool(inventory.TryAddItems("sword", 1, ItemCategory.Equipment)).IsFalse(); // Should fail - equipment doesn't stack
+            AssertBool(inventory.TryAddItems("sword", 1, ItemCategory.Equipment)).IsTrue(); // Should succeed - new stack
+            AssertThat(inventory.GetItemCount("sword")).IsEqual(2);
         }
 
         [TestCase]
@@ -83,13 +85,13 @@ namespace WanderlightOnline.Tests.Contract
             // Test that different item categories behave according to their rules
             var inventory = new Inventory();
             
-            // Generic items (max 20 per stack)
+            // Generic items (max 20 per stack, multiple stacks allowed)
             AssertBool(inventory.TryAddItems("wood", 20, ItemCategory.Generic)).IsTrue();
-            AssertBool(inventory.TryAddItems("wood", 1, ItemCategory.Generic)).IsFalse(); // Should fail - would exceed max stack
+            AssertBool(inventory.TryAddItems("wood", 10, ItemCategory.Generic)).IsTrue(); // Should succeed - new stack
             
-            // Consumable items (max 20 per stack)
+            // Consumable items (max 20 per stack, multiple stacks allowed)
             AssertBool(inventory.TryAddItems("potion", 20, ItemCategory.Consumable)).IsTrue();
-            AssertBool(inventory.TryAddItems("potion", 1, ItemCategory.Consumable)).IsFalse(); // Should fail
+            AssertBool(inventory.TryAddItems("potion", 5, ItemCategory.Consumable)).IsTrue(); // Should succeed - new stack
             
             // Equipment items (max 1 per stack)
             AssertBool(inventory.TryAddItems("armor", 1, ItemCategory.Equipment)).IsTrue();

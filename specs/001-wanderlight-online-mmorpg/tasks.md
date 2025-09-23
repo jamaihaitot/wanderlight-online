@@ -43,7 +43,7 @@
 ## Phase 3.3: Core Implementation (ONLY after tests are failing)
 
 - [ ] T018 Implement PlayerManager class in `Scripts/PlayerManager.cs`
-- [ ] T019 Implement Inventory class in `Scripts/Inventory.cs`
+- [x] T019 Implement Inventory class in `Scripts/Inventory.cs`
 - [ ] T020 Implement NetworkManager class in `Scripts/NetworkManager.cs`
 - [ ] T021 Implement Operator telemetry/logs in `Scripts/Operator.cs`
 - [ ] T022 Implement WorldItem logic in `Scripts/WorldItem.cs`
