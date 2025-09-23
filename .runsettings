@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <MaxCpuCount>1</MaxCpuCount>
+    <TestAdaptersPaths>.</TestAdaptersPaths>
+    <ResultsDirectory>./TestResults</ResultsDirectory>
+    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TestSessionTimeout>600000</TestSessionTimeout>
+    <TreatNoTestsAsError>true</TreatNoTestsAsError>
+    <EnvironmentVariables>
+      <!-- Adjust if your Godot path differs -->
+      <GODOT_BIN>C:\ProgramData\chocolatey\bin\godot.exe</GODOT_BIN>
+    </EnvironmentVariables>
+  </RunConfiguration>
+
+  <LoggerRunSettings>
+    <Loggers>
+      <Logger friendlyName="console" enabled="True">
+        <Configuration>
+          <Verbosity>detailed</Verbosity>
+        </Configuration>
+      </Logger>
+      <Logger friendlyName="trx" enabled="True">
+        <Configuration>
+          <LogFileName>TestResults\test-results.trx</LogFileName>
+        </Configuration>
+      </Logger>
+    </Loggers>
+  </LoggerRunSettings>
+
+  <GdUnit4>
+    <!-- Additional Godot runtime parameters passed when running tests -->
+    <Parameters>--headless --quiet</Parameters>
+    <!-- Display names in output: SimpleName or FullyQualifiedName -->
+    <DisplayName>FullyQualifiedName</DisplayName>
+    <CaptureStdOut>true</CaptureStdOut>
+    <!-- Increase if Godot needs longer to compile the project -->
+    <CompileProcessTimeout>30000</CompileProcessTimeout>
+  </GdUnit4>
+</RunSettings>

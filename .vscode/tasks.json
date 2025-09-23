@@ -109,5 +109,31 @@
       ],
       "group": "test"
     }
+    ,{
+      "label": "dotnet: Run All Tests",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "test",
+        "WanderlightOnline.Tests/WanderlightOnline.Tests.csproj",
+        "--settings",
+        ".runsettings"
+      ],
+      "group": "test"
+    }
+    ,{
+      "label": "dotnet: Run Inventory Tests",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "test",
+        "WanderlightOnline.Tests/WanderlightOnline.Tests.csproj",
+        "--settings",
+        ".runsettings",
+        "--filter",
+        "FullyQualifiedName~Inventory"
+      ],
+      "group": "test"
+    }
   ]
 }

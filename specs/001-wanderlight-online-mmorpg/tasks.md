@@ -45,7 +45,7 @@
 ## Phase 3.3: Core Implementation (ONLY after tests are failing)
 
 - [x] T018 Implement PlayerManager class in `Scripts/PlayerManager.cs` ✅ **COMPLETED** - MVP implementation with full contract coverage
-- [ ] T019 Implement Inventory class in `Scripts/Inventory.cs`
+- [x] T019 Implement Inventory class in `Scripts/Inventory.cs` ✅ COMPLETED - Fixed slots, categories, stacking, atomic ops, JSON
 - [ ] T020 Implement NetworkManager class in `Scripts/NetworkManager.cs`
 - [ ] T021 Implement Operator telemetry/logs in `Scripts/Operator.cs`
 - [ ] T022 Implement WorldItem logic in `Scripts/WorldItem.cs`

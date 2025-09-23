@@ -109,8 +109,8 @@ namespace WanderlightOnline.Tests.Contract
             AssertThat(player).IsNotNull();
 
             // Simulate state changes (would be handled by game logic)
-            player.Position = "some_position"; // Placeholder for actual position
-            player.Inventory = "some_inventory"; // Placeholder for actual inventory
+            player.Position = new Vector2(1, 2);
+            player.Inventory = new Inventory();
 
             // Simulate disconnect
             _playerManager.RemovePlayer("TestPlayer");
