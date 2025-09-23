@@ -1,5 +1,7 @@
+using System;
 using Godot;
 using GdUnit4;
+using WanderlightOnline;
 
 namespace WanderlightOnline.Tests.Contract
 {
@@ -12,64 +14,112 @@ namespace WanderlightOnline.Tests.Contract
         public void InventoryEnforcesCapacityAndStacking()
         {
             // Test 12 slot capacity limit and stacking rules
-            // Expected behavior when implemented:
-            // - 12 slot maximum capacity
-            // - Consumables/materials stack up to 20
-            // - Equipment items don't stack (max 1)
-
-            // Placeholder test - will be implemented when Inventory class exists
-            AssertThat(true).IsFalse(); // Expected to fail in TDD red phase
+            var inventory = new Inventory();
+            
+            // Test capacity
+            AssertThat(inventory.Capacity).IsEqual(12);
+            
+            // Test consumable stacking (max 20)
+            AssertBool(inventory.TryAddItems("apple", 20, ItemCategory.Consumable)).IsTrue();
+            AssertBool(inventory.TryAddItems("apple", 1, ItemCategory.Consumable)).IsFalse(); // Should fail - would exceed max stack
+            
+            // Test equipment stacking (max 1)
+            AssertBool(inventory.TryAddItems("sword", 1, ItemCategory.Equipment)).IsTrue();
+            AssertBool(inventory.TryAddItems("sword", 1, ItemCategory.Equipment)).IsFalse(); // Should fail - equipment doesn't stack
         }
 
         [TestCase]
         public void InventoryActionsAreAtomic()
         {
             // Test that inventory operations are atomic
-            // Either the entire operation succeeds or fails completely
-            // No partial updates should occur
-
-            // Placeholder test - will be implemented when Inventory class exists
-            AssertThat(true).IsFalse(); // Expected to fail in TDD red phase
+            var inventory = new Inventory();
+            
+            // Fill most slots
+            for (int i = 0; i < 11; i++)
+            {
+                AssertBool(inventory.TryAddItems($"item{i}", 1, ItemCategory.Equipment)).IsTrue();
+            }
+            
+            // This should fail because we don't have enough slots for 2 more equipment items
+            AssertBool(inventory.TryAddItems("bigitem", 2, ItemCategory.Equipment)).IsFalse();
+            
+            // Inventory should be unchanged (atomic failure)
+            AssertThat(inventory.GetItemCount("bigitem")).IsEqual(0);
         }
 
         [TestCase]
         public void InventoryPersistsAcrossSessions()
         {
             // Test that inventory state is saved and restored across sessions
-            // Changes should be persisted immediately on modification
-
-            // Placeholder test - will be implemented when Inventory class exists
-            AssertThat(true).IsFalse(); // Expected to fail in TDD red phase
+            var inventory = new Inventory();
+            AssertBool(inventory.TryAddItems("apple", 5, ItemCategory.Consumable)).IsTrue();
+            AssertBool(inventory.TryAddItems("sword", 1, ItemCategory.Equipment)).IsTrue();
+            
+            // Serialize to JSON
+            string json = inventory.ToJson();
+            AssertThat(json).IsNotNull();
+            
+            // Deserialize from JSON
+            var restoredInventory = Inventory.FromJson(json);
+            AssertThat(restoredInventory.GetItemCount("apple")).IsEqual(5);
+            AssertThat(restoredInventory.GetItemCount("sword")).IsEqual(1);
         }
 
         [TestCase]
         public void InventoryEnforcesServerSideValidation()
         {
             // Test that all inventory rules are enforced server-side
-            // Client cannot bypass capacity or stacking limitations
-
-            // Placeholder test - will be implemented when Inventory class exists
-            AssertThat(true).IsFalse(); // Expected to fail in TDD red phase
+            var inventory = new Inventory();
+            
+            // Test invalid inputs are rejected
+            AssertBool(inventory.TryAddItems("", 5, ItemCategory.Consumable)).IsFalse(); // Empty item name
+            AssertBool(inventory.TryAddItems("apple", 0, ItemCategory.Consumable)).IsFalse(); // Zero quantity
+            AssertBool(inventory.TryAddItems("apple", -1, ItemCategory.Consumable)).IsFalse(); // Negative quantity
         }
 
         [TestCase]
         public void InventoryHandlesItemCategoriesCorrectly()
         {
             // Test that different item categories behave according to their rules
-            // Generic, Consumable, Equipment each have different stacking rules
-
-            // Placeholder test - will be implemented when Inventory class exists
-            AssertThat(true).IsFalse(); // Expected to fail in TDD red phase
+            var inventory = new Inventory();
+            
+            // Generic items (max 20 per stack)
+            AssertBool(inventory.TryAddItems("wood", 20, ItemCategory.Generic)).IsTrue();
+            AssertBool(inventory.TryAddItems("wood", 1, ItemCategory.Generic)).IsFalse(); // Should fail - would exceed max stack
+            
+            // Consumable items (max 20 per stack)
+            AssertBool(inventory.TryAddItems("potion", 20, ItemCategory.Consumable)).IsTrue();
+            AssertBool(inventory.TryAddItems("potion", 1, ItemCategory.Consumable)).IsFalse(); // Should fail
+            
+            // Equipment items (max 1 per stack)
+            AssertBool(inventory.TryAddItems("armor", 1, ItemCategory.Equipment)).IsTrue();
+            AssertBool(inventory.TryAddItems("armor", 1, ItemCategory.Equipment)).IsTrue(); // Should succeed - new stack in different slot
         }
 
         [TestCase]
         public void InventoryHandlesEdgeCases()
         {
             // Test edge cases and error conditions
-            // Null/empty names, zero/negative quantities, etc.
-
-            // Placeholder test - will be implemented when Inventory class exists
-            AssertThat(true).IsFalse(); // Expected to fail in TDD red phase
+            var inventory = new Inventory();
+            
+            // Test slot bounds - validate negative case by testing valid operations
+            var validSlot = inventory.GetSlot(0);
+            AssertThat(validSlot).IsNull(); // Empty slot returns null
+            
+            // Test edge operations
+            bool invalidSlotAccess = false;
+            try { inventory.GetSlot(-1); } catch (ArgumentOutOfRangeException) { invalidSlotAccess = true; }
+            AssertBool(invalidSlotAccess).IsTrue();
+            
+            invalidSlotAccess = false;
+            try { inventory.GetSlot(12); } catch (ArgumentOutOfRangeException) { invalidSlotAccess = true; }
+            AssertBool(invalidSlotAccess).IsTrue();
+            
+            // Test empty inventory operations
+            AssertBool(inventory.TryRemoveItems("nonexistent", 1)).IsFalse();
+            AssertThat(inventory.GetItemCount("nonexistent")).IsEqual(0);
+            AssertBool(inventory.IsEmpty()).IsTrue();
+            AssertBool(inventory.IsFull()).IsFalse();
         }
     }
 }
