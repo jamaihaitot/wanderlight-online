@@ -7,7 +7,7 @@
     "*.cs": "csharp"
   },
   "editor.formatOnSave": true,
-  "csharp.semanticHighlighting.enabled": true
-  ,"dotnet.unitTests.runSettingsPath": ".runsettings"
-  ,"dotnet-test-explorer.runSettingsPath": ".runsettings"
+  "csharp.semanticHighlighting.enabled": true,
+  "dotnet.unitTests.runSettingsPath": ".runsettings",
+  "dotnet-test-explorer.runSettingsPath": ".runsettings"
 }

@@ -108,8 +108,8 @@
         "cd wanderlight-online && addons\\gdUnit4\\runtest.cmd --godot_bin C:\\ProgramData\\chocolatey\\bin\\godot.exe -a ../WanderlightOnline.Tests"
       ],
       "group": "test"
-    }
-    ,{
+    },
+    {
       "label": "dotnet: Run All Tests",
       "type": "shell",
       "command": "dotnet",
@@ -120,8 +120,8 @@
         ".runsettings"
       ],
       "group": "test"
-    }
-    ,{
+    },
+    {
       "label": "dotnet: Run Inventory Tests",
       "type": "shell",
       "command": "dotnet",
