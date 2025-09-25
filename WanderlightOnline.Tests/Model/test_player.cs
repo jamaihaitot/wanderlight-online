@@ -42,12 +42,17 @@ namespace WanderlightOnline.Tests.Model
         public void PlayerInventoryRelationship()
         {
             // Arrange: New Player entity
-            // Act: Access inventory property
+            // Act: Create a player and access inventory property
+            var player = new Player("TestPlayer");
+
             // Assert: Inventory is automatically initialized
-            // Assert: Inventory is not null
+            AssertThat(player.Inventory).IsNotNull();
+
             // Assert: Inventory belongs to this player exclusively
+            AssertThat(player.Inventory).IsInstanceOf<Inventory>();
+
             // Assert: Inventory capacity matches specifications (12 slots)
-            AssertThat(false).IsTrue(); // Fails until Player model implemented
+            AssertThat(player.Inventory.Capacity).IsEqual(12);
         }
 
         // Model: Connection state manages player lifecycle
