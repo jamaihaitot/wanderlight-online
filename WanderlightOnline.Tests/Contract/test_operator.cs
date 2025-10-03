@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+
 using GdUnit4;
+
 using WanderlightOnline;
 
 namespace WanderlightOnline.Tests.Contract
@@ -36,8 +38,8 @@ namespace WanderlightOnline.Tests.Contract
         {
             var op = new Operator();
 
-            op.LogInfo("Player connected", new System.Collections.Generic.Dictionary<string, object>{{"playerId", "p1"}});
-            op.LogWarning("High memory usage", new System.Collections.Generic.Dictionary<string, object>{{"percent", 85}});
+            op.LogInfo("Player connected", new System.Collections.Generic.Dictionary<string, object> { { "playerId", "p1" } });
+            op.LogWarning("High memory usage", new System.Collections.Generic.Dictionary<string, object> { { "percent", 85 } });
             op.LogError("Database connection failed", new InvalidOperationException("db-timeout"));
 
             var logs = op.RecentLogs;
@@ -135,7 +137,7 @@ namespace WanderlightOnline.Tests.Contract
         {
             var op = new Operator();
             var ex = new ArgumentException("arg");
-            op.LogError("Critical", ex, new System.Collections.Generic.Dictionary<string, object>{{"userId","p1"}});
+            op.LogError("Critical", ex, new System.Collections.Generic.Dictionary<string, object> { { "userId", "p1" } });
 
             var err = op.RecentLogs.LastOrDefault(l => l.Level == LogLevel.Error);
             AssertThat(err).IsNotNull();

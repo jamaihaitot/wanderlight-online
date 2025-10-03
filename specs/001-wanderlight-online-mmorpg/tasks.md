@@ -49,10 +49,10 @@
 - [x] T020 Implement NetworkManager class in `Scripts/NetworkManager.cs` ✅ **COMPLETED** - Full WebSocket networking with 20Hz deltas, message queuing, atomic actions, reconnection
 - [x] T021 Implement Operator telemetry/logs in `Scripts/Operator.cs` ✅ COMPLETED - Structured logs, telemetry metrics, permissions, world reset, dashboard; contract tests passing
 - [x] T022 Implement WorldItem logic in `Scripts/WorldItem.cs` ✅ COMPLETED - Implemented WorldItem model with stacking rules, position management, ownership reservations/pickup, persistence toggling, split/merge helpers, and lifecycle; model tests passing
-- [x] T023 Implement DatabaseManager class in `Scripts/DatabaseManager.cs`  
-	- Note: All model tests pass except for primitive int assertion due to GdUnit4 C# limitation (see code comments). Limitation is documented in code and test file; workaround not possible until framework support is added.
-- [x] T024 Implement PlayerController class in `Scripts/PlayerController.cs`  
-	- PlayerController implemented, tested, and all model tests pass.
+- [x] T023 Implement DatabaseManager class in `Scripts/DatabaseManager.cs`
+  - Note: All model tests pass except for primitive int assertion due to GdUnit4 C# limitation (see code comments). Limitation is documented in code and test file; workaround not possible until framework support is added.
+- [x] T024 Implement PlayerController class in `Scripts/PlayerController.cs`
+  - PlayerController implemented, tested, and all model tests pass.
 
 ## Phase 3.4: Integration
 
@@ -82,17 +82,17 @@
 - Core implementation before integration (T025–T029)
 - Integration before polish (T030–T033)
 
-
- [x] T018 Implement PlayerManager class in `Scripts/PlayerManager.cs` ✅ **COMPLETED** - MVP implementation with full contract coverage. All contract/model tests passing.
- [x] T019 Implement Inventory class in `Scripts/Inventory.cs` ✅ COMPLETED - Fixed slots, categories, stacking, atomic ops, JSON. All contract/model tests passing.
- [x] T020 Implement NetworkManager class in `Scripts/NetworkManager.cs` ✅ **COMPLETED** - Full WebSocket networking with 20Hz deltas, message queuing, atomic actions, reconnection. All contract/model tests passing.
- [x] T021 Implement Operator telemetry/logs in `Scripts/Operator.cs` ✅ COMPLETED - Structured logs, telemetry metrics, permissions, world reset, dashboard; contract tests passing.
- [x] T022 Implement WorldItem logic in `Scripts/WorldItem.cs` ✅ COMPLETED - Implemented WorldItem model with stacking rules, position management, ownership reservations/pickup, persistence toggling, split/merge helpers, and lifecycle; model tests passing.
- [x] T023 Implement DatabaseManager class in `Scripts/DatabaseManager.cs`  
-	- All model tests pass except for a single known GdUnit4 C# limitation: primitive int assertion is not supported (see code and test comments). This is a framework limitation, not a logic bug.
- [x] T024 Implement PlayerController class in `Scripts/PlayerController.cs`  
-	- PlayerController implemented, tested, and all model tests pass.
+[x] T018 Implement PlayerManager class in `Scripts/PlayerManager.cs` ✅ **COMPLETED** - MVP implementation with full contract coverage. All contract/model tests passing.
+[x] T019 Implement Inventory class in `Scripts/Inventory.cs` ✅ COMPLETED - Fixed slots, categories, stacking, atomic ops, JSON. All contract/model tests passing.
+[x] T020 Implement NetworkManager class in `Scripts/NetworkManager.cs` ✅ **COMPLETED** - Full WebSocket networking with 20Hz deltas, message queuing, atomic actions, reconnection. All contract/model tests passing.
+[x] T021 Implement Operator telemetry/logs in `Scripts/Operator.cs` ✅ COMPLETED - Structured logs, telemetry metrics, permissions, world reset, dashboard; contract tests passing.
+[x] T022 Implement WorldItem logic in `Scripts/WorldItem.cs` ✅ COMPLETED - Implemented WorldItem model with stacking rules, position management, ownership reservations/pickup, persistence toggling, split/merge helpers, and lifecycle; model tests passing.
+[x] T023 Implement DatabaseManager class in `Scripts/DatabaseManager.cs`  
+ - All model tests pass except for a single known GdUnit4 C# limitation: primitive int assertion is not supported (see code and test comments). This is a framework limitation, not a logic bug.
+[x] T024 Implement PlayerController class in `Scripts/PlayerController.cs`  
+ - PlayerController implemented, tested, and all model tests pass.
 
 **Phase 3.3 Status:**
+
 - All core model/contract tests for T018–T024 are passing except for the single known GdUnit4 limitation above.
 - All integration test failures (T013–T017) are expected and by design until full integration is implemented. See test files for details (all use `AssertThat(false).IsTrue()`).

@@ -32,6 +32,7 @@ namespace WanderlightOnline
             displayName = displayName.Trim();
             if (!this.IsValidDisplayName(displayName))
             {
+                Console.WriteLine($"[PlayerManager] TryAddPlayer: Invalid display name '{displayName}'");
                 error = "Invalid display name.";
                 return false;
             }
@@ -39,6 +40,7 @@ namespace WanderlightOnline
             // Check active names
             if (this.activeDisplayNames.Contains(displayName))
             {
+                Console.WriteLine($"[PlayerManager] TryAddPlayer: Display name already taken '{displayName}'");
                 error = "Display name already taken.";
                 return false;
             }
@@ -48,6 +50,7 @@ namespace WanderlightOnline
             {
                 if (DateTime.UtcNow < expiry)
                 {
+                    Console.WriteLine($"[PlayerManager] TryAddPlayer: Display name reserved '{displayName}'");
                     error = "Display name is reserved. Please try again later.";
                     return false;
                 }
@@ -64,27 +67,30 @@ namespace WanderlightOnline
             // Restore state if available
             if (this.disconnectedPlayerStates.TryGetValue(displayName, out var savedPlayer))
             {
+                Console.WriteLine($"[PlayerManager] TryAddPlayer: Restoring player state for '{displayName}'");
                 // Restore all properties
                 var restored = new Player(displayName)
                 {
                     Position = savedPlayer.Position,
                     Inventory = savedPlayer.Inventory ?? new Inventory(),
-                    State = savedPlayer.State
+                    State = savedPlayer.State,
                 };
                 this.players[displayName] = restored;
                 this.disconnectedPlayerStates.Remove(displayName);
             }
             else
             {
+                Console.WriteLine($"[PlayerManager] TryAddPlayer: Creating new player '{displayName}'");
                 // Always initialize inventory for atomicity
                 var newPlayer = new Player(displayName)
                 {
-                    Inventory = new Inventory()
+                    Inventory = new Inventory(),
                 };
                 this.players[displayName] = newPlayer;
             }
 
             error = null;
+            Console.WriteLine($"[PlayerManager] TryAddPlayer: Success for '{displayName}'");
             return true;
         }
 
