@@ -11,12 +11,15 @@ namespace WanderlightOnline
 
     /// <summary>
     /// Inventory for player items. Fixed-slot array with atomic operations and serialization support.
+    /// Integrated with DatabaseManager for persistent storage.
     /// </summary>
     public class Inventory
     {
         private const int DefaultCapacity = 12;
 
         private readonly ItemStack?[] slots;
+        private readonly DatabaseManager? databaseManager;
+        private SpacetimeDB.Identity? ownerId; // Player identity for SpacetimeDB persistence
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Inventory"/> class with default capacity (12).
@@ -30,7 +33,8 @@ namespace WanderlightOnline
         /// Initializes a new instance of the <see cref="Inventory"/> class.
         /// </summary>
         /// <param name="capacity">The fixed number of slots (must be 12 to satisfy contract).</param>
-        public Inventory(int capacity)
+        /// <param name="owner">Optional player identity for SpacetimeDB persistence.</param>
+        public Inventory(int capacity, SpacetimeDB.Identity? owner = null)
         {
             if (capacity != DefaultCapacity)
             {
@@ -40,6 +44,8 @@ namespace WanderlightOnline
 
             this.slots = new ItemStack?[capacity];
             this.Capacity = capacity;
+            this.ownerId = owner;
+            this.databaseManager = owner.HasValue ? DatabaseManager.Instance : null;
         }
 
         /// <summary>
@@ -108,6 +114,7 @@ namespace WanderlightOnline
 
         /// <summary>
         /// Attempts to add the entire quantity of an item atomically. No partial state on failure.
+        /// Note: For persistence, caller should invoke DatabaseManager.SaveInventory() with the modified ItemStacks after successful add.
         /// </summary>
         /// <param name="itemType">Item identifier.</param>
         /// <param name="category">Item category.</param>
@@ -183,11 +190,22 @@ namespace WanderlightOnline
                 }
             }
 
+            // Persist changes if database manager is available
+            if (this.databaseManager != null && this.ownerId.HasValue && remaining == 0)
+            {
+                // Save each modified ItemStack to SpacetimeDB
+                foreach (var stack in this.slots.Where(s => s != null))
+                {
+                    this.databaseManager.SaveInventory(stack!);
+                }
+            }
+
             return remaining == 0;
         }
 
         /// <summary>
         /// Attempts to remove the specified quantity of an item across stacks atomically.
+        /// Note: For persistence, caller should invoke DatabaseManager.SaveInventory() after successful remove.
         /// </summary>
         /// <param name="itemType">Item identifier.</param>
         /// <param name="quantity">Quantity to remove (positive).</param>
@@ -218,6 +236,16 @@ namespace WanderlightOnline
                     {
                         this.slots[i] = null; // Clear empty stacks
                     }
+                }
+            }
+
+            // Persist changes if database manager is available
+            if (this.databaseManager != null && this.ownerId.HasValue)
+            {
+                // Save each modified ItemStack to SpacetimeDB
+                foreach (var stack in this.slots.Where(s => s != null))
+                {
+                    this.databaseManager.SaveInventory(stack!);
                 }
             }
 
