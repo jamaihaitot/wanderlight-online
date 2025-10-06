@@ -117,6 +117,7 @@ namespace WanderlightOnline
     /// <summary>
     /// NetworkManager: Handles WebSocket connections, message queuing, state deltas, and synchronization.
     /// Provides real-time networking with 20Hz updates and atomic action handling.
+    /// Integrated with SpacetimeDB for persistent state management.
     /// </summary>
     public class NetworkManager
     {
@@ -131,6 +132,7 @@ namespace WanderlightOnline
         private readonly Dictionary<string, DateTime> messageSentTimes = new Dictionary<string, DateTime>();
         private readonly List<StateDelta> stateDeltaHistory = new List<StateDelta>();
         private readonly object lockObject = new object();
+        private readonly DatabaseManager databaseManager;
 
         private DateTime lastHeartbeat = DateTime.MinValue;
         private DateTime lastDeltaUpdate = DateTime.MinValue;
@@ -143,6 +145,14 @@ namespace WanderlightOnline
         private int totalMessagesSent = 0;
         private int totalMessagesReceived = 0;
         private int messagesLost = 0;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NetworkManager"/> class.
+        /// </summary>
+        public NetworkManager()
+        {
+            this.databaseManager = DatabaseManager.Instance;
+        }
 
         /// <summary>
         /// Gets the current connection state.
@@ -201,9 +211,9 @@ namespace WanderlightOnline
         public int MessagesLost => this.messagesLost;
 
         /// <summary>
-        /// Attempts to establish a WebSocket connection to the game server.
+        /// Attempts to establish a WebSocket connection to the game server via SpacetimeDB.
         /// </summary>
-        /// <param name="serverUrl">The server URL to connect to.</param>
+        /// <param name="serverUrl">The SpacetimeDB server URL to connect to.</param>
         /// <param name="timeoutMs">Connection timeout in milliseconds.</param>
         /// <returns>True if connection established, false otherwise.</returns>
         public bool TryConnect(string serverUrl, int timeoutMs = ConnectionTimeoutMs)
@@ -225,18 +235,30 @@ namespace WanderlightOnline
 
             try
             {
-                // Simulate connection establishment
-                // In a real implementation, this would use Godot's WebSocket client
-                Thread.Sleep(100); // Simulate connection delay
+                // Connect via DatabaseManager which handles SpacetimeDB WebSocket connection
+                var connectTask = this.databaseManager.ConnectAsync(serverUrl, "wanderlight-server");
+                var success = connectTask.GetAwaiter().GetResult();
 
-                lock (this.lockObject)
+                if (success)
                 {
-                    this.connectionState = NetworkConnectionState.Connected;
-                    this.lastHeartbeat = DateTime.UtcNow;
-                    // Don't reset delta/snapshot timestamps on connect to allow immediate sends
-                }
+                    lock (this.lockObject)
+                    {
+                        this.connectionState = NetworkConnectionState.Connected;
+                        this.lastHeartbeat = DateTime.UtcNow;
+                        // Don't reset delta/snapshot timestamps on connect to allow immediate sends
+                    }
 
-                return true;
+                    return true;
+                }
+                else
+                {
+                    lock (this.lockObject)
+                    {
+                        this.connectionState = NetworkConnectionState.Disconnected;
+                    }
+
+                    return false;
+                }
             }
             catch
             {
@@ -470,10 +492,83 @@ namespace WanderlightOnline
         }
 
         /// <summary>
-        /// Attempts to reconnect and restore player state.
+        /// Attempts to reconnect and restore player state from SpacetimeDB.
         /// </summary>
         /// <param name="serverUrl">The server URL to reconnect to.</param>
-        /// <param name="playerState">The player state to restore.</param>
+        /// <param name="playerId">The player identity to restore state for.</param>
+        /// <returns>True if reconnection and state restoration succeeded, false otherwise.</returns>
+        public bool TryReconnectAndRestoreState(string serverUrl, SpacetimeDB.Identity playerId)
+        {
+            if (string.IsNullOrWhiteSpace(serverUrl))
+            {
+                return false;
+            }
+
+            lock (this.lockObject)
+            {
+                if (this.isReconnecting)
+                {
+                    return false; // Already attempting reconnection
+                }
+
+                this.isReconnecting = true;
+                this.connectionState = NetworkConnectionState.Reconnecting;
+            }
+
+            try
+            {
+                // Attempt to reconnect via SpacetimeDB
+                if (!this.TryConnect(serverUrl))
+                {
+                    lock (this.lockObject)
+                    {
+                        this.isReconnecting = false;
+                        this.connectionState = NetworkConnectionState.Disconnected;
+                    }
+
+                    return false;
+                }
+
+                // Load complete player state from DatabaseManager
+                var (player, inventory, worldItems) = this.databaseManager.LoadPlayerState(playerId);
+
+                if (player == null)
+                {
+                    // Player not found in database
+                    lock (this.lockObject)
+                    {
+                        this.isReconnecting = false;
+                    }
+
+                    return false;
+                }
+
+                // Player state restored successfully from SpacetimeDB
+                // The caller (PlayerManager) should handle applying this state
+                lock (this.lockObject)
+                {
+                    this.isReconnecting = false;
+                }
+
+                return true;
+            }
+            catch
+            {
+                lock (this.lockObject)
+                {
+                    this.isReconnecting = false;
+                    this.connectionState = NetworkConnectionState.Disconnected;
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Attempts to reconnect and restore player state (string-based version for compatibility).
+        /// </summary>
+        /// <param name="serverUrl">The server URL to reconnect to.</param>
+        /// <param name="playerState">The player state JSON to restore.</param>
         /// <returns>True if reconnection and state restoration succeeded, false otherwise.</returns>
         public bool TryReconnectAndRestoreState(string serverUrl, string playerState)
         {
