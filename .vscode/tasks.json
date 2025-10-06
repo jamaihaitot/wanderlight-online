@@ -1,139 +1,185 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "Godot: Build C# Project",
-      "type": "shell",
-      "command": "dotnet",
-      "args": ["build", "wanderlight-online"],
-      "group": "build"
-    },
-    {
-      "label": "SpacetimeDB: Build Module",
-      "type": "shell",
-      "command": "dotnet",
-      "args": ["build", "spacetime-module/wanderlight-server", "-c", "Release"],
-      "group": "build"
-    },
-    {
-      "label": "SpacetimeDB: List Databases",
-      "type": "shell",
-      "command": "spacetime",
-      "args": ["list"],
-      "group": "build"
-    },
-    {
-      "label": "SpacetimeDB: Start Server",
-      "type": "shell",
-      "command": "spacetime",
-      "args": ["start"],
-      "isBackground": true,
-      "group": "build"
-    },
-    {
-      "label": "SpacetimeDB: Start Server",
-      "type": "shell",
-      "command": "spacetime",
-      "args": ["start"],
-      "isBackground": true,
-      "group": "build"
-    },
-    {
-      "label": "SpacetimeDB: List Databases",
-      "type": "shell",
-      "command": "spacetime",
-      "args": ["list"],
-      "group": "build"
-    },
-    {
-      "label": "SpacetimeDB: Build Module",
-      "type": "shell",
-      "command": "dotnet",
-      "args": ["build", "spacetime-module/wanderlight-server", "-c", "Release"],
-      "group": "build"
-    },
-    {
-      "label": "Godot: Build C# Project",
-      "type": "shell",
-      "command": "dotnet",
-      "args": ["build", "wanderlight-online"],
-      "group": "build"
-    },
-    {
-      "label": "Godot: Format C# Code",
-      "type": "shell",
-      "command": "dotnet",
-      "args": [
-        "format",
-        "wanderlight-online/Wanderlight Online.sln",
-        "--severity",
-        "info"
-      ],
-      "group": "build"
-    },
-    {
-      "label": "SpacetimeDB: Stop Server",
-      "type": "shell",
-      "command": "powershell",
-      "args": [
-        "-Command",
-        "Get-Process -Name 'spacetimedb-standalone' -ErrorAction SilentlyContinue | Stop-Process -Force; Write-Output 'Server stopped (if running)'"
-      ],
-      "group": "build"
-    },
-    {
-      "label": "SpacetimeDB: Force Stop Server",
-      "type": "shell",
-      "command": "powershell",
-      "args": [
-        "-Command",
-        "Get-Process -Name 'spacetimedb-standalone' -ErrorAction SilentlyContinue | Stop-Process -Force"
-      ],
-      "group": "build"
-    },
-    {
-      "label": "SpacetimeDB: Fresh Start Server",
-      "type": "shell",
-      "command": "spacetime",
-      "args": ["start"],
-      "isBackground": true,
-      "group": "build"
-    },
-    {
-      "label": "gdUnit4: Run Contract Tests",
-      "type": "shell",
-      "command": "cmd",
-      "args": [
-        "/c",
-        "cd wanderlight-online && addons\\gdUnit4\\runtest.cmd --godot_bin C:\\ProgramData\\chocolatey\\bin\\godot.exe -a ../WanderlightOnline.Tests"
-      ],
-      "group": "test"
-    },
-    {
-      "label": "dotnet: Run All Tests",
-      "type": "shell",
-      "command": "dotnet",
-      "args": [
-        "test",
-        "WanderlightOnline.Tests/WanderlightOnline.Tests.csproj",
-        "--settings",
-        ".runsettings"
-      ],
-      "group": "test"
-    },
-    {
-      "label": "dotnet: Run Inventory Tests",
-      "type": "shell",
-      "command": "dotnet",
-      "args": [
-        "test",
-        "WanderlightOnline.Tests/WanderlightOnline.Tests.csproj",
-        "--settings",
-        ".runsettings",
-        "--filter",
-        "FullyQualifiedName~Inventory"
-      ],
-      "group": "test"
-    }
-  ]
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Godot: Build C# Project",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"wanderlight-online"
+			],
+			"group": "build"
+		},
+		{
+			"label": "SpacetimeDB: Build Module",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"spacetime-module/wanderlight-server",
+				"-c",
+				"Release"
+			],
+			"group": "build"
+		},
+		{
+			"label": "SpacetimeDB: List Databases",
+			"type": "shell",
+			"command": "spacetime",
+			"args": [
+				"list"
+			],
+			"group": "build"
+		},
+		{
+			"label": "SpacetimeDB: Start Server",
+			"type": "shell",
+			"command": "spacetime",
+			"args": [
+				"start"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "SpacetimeDB: Start Server",
+			"type": "shell",
+			"command": "spacetime",
+			"args": [
+				"start"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "SpacetimeDB: List Databases",
+			"type": "shell",
+			"command": "spacetime",
+			"args": [
+				"list"
+			],
+			"group": "build"
+		},
+		{
+			"label": "SpacetimeDB: Build Module",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"spacetime-module/wanderlight-server",
+				"-c",
+				"Release"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Godot: Build C# Project",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"wanderlight-online"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Godot: Format C# Code",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"format",
+				"wanderlight-online/Wanderlight Online.sln",
+				"--severity",
+				"info"
+			],
+			"group": "build"
+		},
+		{
+			"label": "SpacetimeDB: Stop Server",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-Command",
+				"Get-Process -Name 'spacetimedb-standalone' -ErrorAction SilentlyContinue | Stop-Process -Force; Write-Output 'Server stopped (if running)'"
+			],
+			"group": "build"
+		},
+		{
+			"label": "SpacetimeDB: Force Stop Server",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-Command",
+				"Get-Process -Name 'spacetimedb-standalone' -ErrorAction SilentlyContinue | Stop-Process -Force"
+			],
+			"group": "build"
+		},
+		{
+			"label": "SpacetimeDB: Fresh Start Server",
+			"type": "shell",
+			"command": "spacetime",
+			"args": [
+				"start"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "gdUnit4: Run Contract Tests",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"cd wanderlight-online && addons\\gdUnit4\\runtest.cmd --godot_bin C:\\ProgramData\\chocolatey\\bin\\godot.exe -a ../WanderlightOnline.Tests"
+			],
+			"group": "test"
+		},
+		{
+			"label": "dotnet: Run All Tests",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"test",
+				"WanderlightOnline.Tests/WanderlightOnline.Tests.csproj",
+				"--settings",
+				".runsettings"
+			],
+			"group": "test"
+		},
+		{
+			"label": "dotnet: Run Inventory Tests",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"test",
+				"WanderlightOnline.Tests/WanderlightOnline.Tests.csproj",
+				"--settings",
+				".runsettings",
+				"--filter",
+				"FullyQualifiedName~Inventory"
+			],
+			"group": "test"
+		},
+		{
+			"label": "gdUnit4: Run Contract Tests",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"cd wanderlight-online && addons\\gdUnit4\\runtest.cmd --godot_bin C:\\ProgramData\\chocolatey\\bin\\godot.exe -a ../WanderlightOnline.Tests"
+			],
+			"group": "test"
+		},
+		{
+			"label": "gdUnit4: Run Godot Contract Tests",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"cd wanderlight-online && addons\\gdUnit4\\runtest.cmd --godot_bin C:\\ProgramData\\chocolatey\\bin\\godot.exe -a Tests/Contract"
+			],
+			"group": "test"
+		}
+	]
 }
