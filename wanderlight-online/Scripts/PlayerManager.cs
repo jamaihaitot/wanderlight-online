@@ -9,17 +9,27 @@ namespace WanderlightOnline
 
     /// <summary>
     /// PlayerManager: Handles player authentication, connection, state, and contract enforcement.
+    /// Integrated with DatabaseManager for persistent state restoration.
     /// </summary>
     public class PlayerManager
     {
         private HashSet<string> activeDisplayNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         private Dictionary<string, Player> players = new Dictionary<string, Player>(StringComparer.OrdinalIgnoreCase);
+        private readonly DatabaseManager databaseManager;
 
         // Name reservation: display name -> reservation expiry
         private Dictionary<string, DateTime> reservedNames = new Dictionary<string, DateTime>(StringComparer.OrdinalIgnoreCase);
 
         // State restoration: display name -> last known Player state
         private Dictionary<string, Player> disconnectedPlayerStates = new Dictionary<string, Player>(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlayerManager"/> class.
+        /// </summary>
+        public PlayerManager()
+        {
+            this.databaseManager = DatabaseManager.Instance;
+        }
 
         /// <summary>
         /// Attempts to add a player with a display name.
@@ -141,6 +151,94 @@ namespace WanderlightOnline
 
             // TODO: Add profanity filter
             return true;
+        }
+
+        /// <summary>
+        /// Attempts to restore a player's state from SpacetimeDB using their Identity.
+        /// </summary>
+        /// <param name="identity">The SpacetimeDB Identity of the player.</param>
+        /// <param name="displayName">The display name to restore (output parameter).</param>
+        /// <param name="error">Error message if restoration fails.</param>
+        /// <returns>True if player state restored successfully, false otherwise.</returns>
+        public bool TryRestorePlayerFromDatabase(SpacetimeDB.Identity identity, out string? displayName, out string? error)
+        {
+            try
+            {
+                Console.WriteLine($"[PlayerManager] TryRestorePlayerFromDatabase: Loading state for Identity {identity}");
+
+                // Load player state from database
+                var (dbPlayer, dbInventoryItems, dbWorldItems) = this.databaseManager.LoadPlayerState(identity);
+
+                if (dbPlayer == null)
+                {
+                    Console.WriteLine($"[PlayerManager] TryRestorePlayerFromDatabase: No saved state found for Identity {identity}");
+                    displayName = null;
+                    error = "No saved player state found.";
+                    return false;
+                }
+
+                displayName = dbPlayer.DisplayName;
+
+                // Check if player is already active
+                if (this.activeDisplayNames.Contains(displayName))
+                {
+                    Console.WriteLine($"[PlayerManager] TryRestorePlayerFromDatabase: Player '{displayName}' already active");
+                    error = "Player is already connected.";
+                    return false;
+                }
+
+                // Check reserved names
+                if (this.reservedNames.TryGetValue(displayName, out var expiry))
+                {
+                    if (DateTime.UtcNow < expiry)
+                    {
+                        Console.WriteLine($"[PlayerManager] TryRestorePlayerFromDatabase: Display name reserved '{displayName}'");
+                        error = "Display name is reserved. Please try again later.";
+                        return false;
+                    }
+                    else
+                    {
+                        // Reservation expired, remove
+                        this.reservedNames.Remove(displayName);
+                        this.disconnectedPlayerStates.Remove(displayName);
+                    }
+                }
+
+                // Restore player state
+                this.activeDisplayNames.Add(displayName);
+
+                // Create inventory with SpacetimeDB integration
+                var inventory = new Inventory(12, identity);
+
+                // Populate inventory with restored items
+                foreach (var itemStack in dbInventoryItems)
+                {
+                    if (!inventory.TryAdd(itemStack.ItemType, itemStack.Category, itemStack.Quantity))
+                    {
+                        Console.WriteLine($"[PlayerManager] TryRestorePlayerFromDatabase: Failed to restore item {itemStack.ItemType} (quantity: {itemStack.Quantity})");
+                    }
+                }
+
+                var restored = new Player(displayName)
+                {
+                    Position = dbPlayer.Position,
+                    Inventory = inventory,
+                    State = dbPlayer.State,
+                };
+
+                this.players[displayName] = restored;
+
+                Console.WriteLine($"[PlayerManager] TryRestorePlayerFromDatabase: Successfully restored '{displayName}' from database");
+                error = null;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[PlayerManager] TryRestorePlayerFromDatabase: Exception - {ex.Message}");
+                displayName = null;
+                error = $"Failed to restore player state: {ex.Message}";
+                return false;
+            }
         }
 
         /// <summary>
