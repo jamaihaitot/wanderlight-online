@@ -244,6 +244,7 @@ namespace WanderlightOnline
                     {
                         this.connectionState = NetworkConnectionState.Connected;
                         this.lastHeartbeat = DateTime.UtcNow;
+
                         // Don't reset delta/snapshot timestamps on connect to allow immediate sends
                     }
 

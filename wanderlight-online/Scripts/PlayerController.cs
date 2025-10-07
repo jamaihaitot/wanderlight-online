@@ -59,6 +59,7 @@ namespace WanderlightOnline
         {
             if (item == null || !item.IsPersistent || !item.InWorld)
                 return false;
+
             // Try to add the item to inventory atomically
             return this.inventory.TryAdd(item.ItemType, item.Category, item.Quantity);
         }
@@ -70,6 +71,7 @@ namespace WanderlightOnline
         {
             if (string.IsNullOrEmpty(itemType))
                 return false;
+
             // Try to remove one of the item type from inventory atomically
             return this.inventory.TryRemove(itemType, 1);
         }

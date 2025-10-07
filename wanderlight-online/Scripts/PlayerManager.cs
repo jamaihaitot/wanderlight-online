@@ -78,6 +78,7 @@ namespace WanderlightOnline
             if (this.disconnectedPlayerStates.TryGetValue(displayName, out var savedPlayer))
             {
                 Console.WriteLine($"[PlayerManager] TryAddPlayer: Restoring player state for '{displayName}'");
+
                 // Restore all properties
                 var restored = new Player(displayName)
                 {
@@ -91,6 +92,7 @@ namespace WanderlightOnline
             else
             {
                 Console.WriteLine($"[PlayerManager] TryAddPlayer: Creating new player '{displayName}'");
+
                 // Always initialize inventory for atomicity
                 var newPlayer = new Player(displayName)
                 {

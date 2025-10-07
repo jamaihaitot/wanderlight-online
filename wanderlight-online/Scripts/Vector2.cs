@@ -16,6 +16,7 @@ namespace WanderlightOnline
     public class Vector2
     {
         public float X { get; set; }
+
         public float Y { get; set; }
 
         public Vector2(float x = 0, float y = 0)
@@ -23,7 +24,6 @@ namespace WanderlightOnline
             this.X = x;
             this.Y = y;
         }
-
 
         public float Length => (float)Math.Sqrt((this.X * this.X) + (this.Y * this.Y));
 
@@ -35,9 +35,13 @@ namespace WanderlightOnline
         }
 
         public static Vector2 operator +(Vector2 a, Vector2 b) => new Vector2(a.X + b.X, a.Y + b.Y);
+
         public static Vector2 operator -(Vector2 a, Vector2 b) => new Vector2(a.X - b.X, a.Y - b.Y);
+
         public static Vector2 operator *(Vector2 v, float scalar) => new Vector2(v.X * scalar, v.Y * scalar);
+
         public static Vector2 operator *(float scalar, Vector2 v) => new Vector2(v.X * scalar, v.Y * scalar);
+
         public static Vector2 operator /(Vector2 v, float scalar) => new Vector2(v.X / scalar, v.Y / scalar);
     }
 }
