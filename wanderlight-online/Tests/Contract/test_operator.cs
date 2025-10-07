@@ -8,7 +8,7 @@ namespace WanderlightOnline.Tests.Contract
     /// Contract tests for the Operator telemetry and logging system.
     /// </summary>
     [TestSuite]
-    public class OperatorContractTests
+    public class OperatorContractTests : IDisposable
     {
         private Operator operatorInstance = null!;
 
@@ -152,6 +152,15 @@ namespace WanderlightOnline.Tests.Contract
             {
                 readOnlyOp.Dispose();
             }
+        }
+
+        /// <summary>
+        /// Disposes resources used by the test class.
+        /// </summary>
+        public void Dispose()
+        {
+            operatorInstance?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

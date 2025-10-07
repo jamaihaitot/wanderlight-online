@@ -23,7 +23,9 @@ namespace WanderlightOnline.Tests.Unit
             // Null item type should throw
             try
             {
-                var invalid = new ItemStack(null, ItemCategory.Generic, 1);
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type
+                var invalid = new ItemStack(null!, ItemCategory.Generic, 1);
+#pragma warning restore CS8625
                 AssertThat(false).IsTrue(); // Should not reach here
             }
             catch (ArgumentException)

@@ -2,3 +2,95 @@ root = true
 
 [*]
 charset = utf-8
+
+[*.cs]
+indent_style = space
+indent_size = 4
+end_of_line = crlf
+insert_final_newline = true
+dotnet_diagnostic.CS1591.severity = none
+dotnet_diagnostic.CS0618.severity = warning
+dotnet_analyzer_diagnostic.category-Style.severity = suggestion
+dotnet_analyzer_diagnostic.severity = warning
+
+# .NET code style
+dotnet_style_qualification_for_field = false:suggestion
+dotnet_style_qualification_for_property = false:suggestion
+dotnet_style_qualification_for_method = false:suggestion
+dotnet_style_qualification_for_event = false:suggestion
+
+# C# code style
+csharp_prefer_braces = true:suggestion
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_prefer_simple_using_statement = true:suggestion
+csharp_style_namespace_declarations = file_scoped:suggestion
+
+# Newline options
+csharp_new_line_before_open_brace = all
+csharp_new_line_between_query_expression_clauses = true
+
+# Organize usings
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = true
+
+# StyleCop minimal rules
+# Disable or relax rules until codebase is ready
+# File header
+dotnet_diagnostic.SA1633.severity = none
+dotnet_diagnostic.SA1636.severity = none
+# Prefix 'this.'
+dotnet_diagnostic.SA1101.severity = none
+# Using directives must be placed correctly
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1210.severity = none
+# Field naming (_camelCase)
+dotnet_diagnostic.SA1309.severity = none
+# Blank lines
+dotnet_diagnostic.SA1515.severity = none
+dotnet_diagnostic.SA1516.severity = none
+dotnet_diagnostic.SA1505.severity = none
+dotnet_diagnostic.SA1507.severity = none
+# Multiple types per file
+dotnet_diagnostic.SA1402.severity = none
+# Braces
+dotnet_diagnostic.SA1503.severity = none
+dotnet_diagnostic.SA1501.severity = none
+dotnet_diagnostic.SA1512.severity = none
+# Element ordering
+dotnet_diagnostic.SA1201.severity = none
+dotnet_diagnostic.SA1202.severity = none
+dotnet_diagnostic.SA1203.severity = none
+dotnet_diagnostic.SA1208.severity = none
+dotnet_diagnostic.SA1214.severity = none
+# Naming
+dotnet_diagnostic.SA1649.severity = none
+# Other
+dotnet_diagnostic.SA1122.severity = none
+dotnet_diagnostic.SA1135.severity = none
+dotnet_diagnostic.SA0001.severity = none
+dotnet_diagnostic.SA1518.severity = none
+# Performance rules - keep as suggestions to avoid forcing code changes
+dotnet_diagnostic.CA1845.severity = suggestion
+# Code quality - disable CA1822 to avoid forcing static changes
+dotnet_diagnostic.CA1822.severity = none
+dotnet_diagnostic.CA1805.severity = none
+# Naming rules - disable to avoid forcing naming changes
+dotnet_diagnostic.CA1707.severity = none
+dotnet_diagnostic.CA1711.severity = none
+dotnet_diagnostic.CA1716.severity = none
+# Other code analysis rules
+dotnet_diagnostic.CA1869.severity = suggestion
+dotnet_diagnostic.CA1854.severity = suggestion
+dotnet_diagnostic.CA1816.severity = suggestion
+dotnet_diagnostic.CA1311.severity = suggestion
+dotnet_diagnostic.CA1304.severity = suggestion
+dotnet_diagnostic.CA1001.severity = warning
+# Nullable reference warnings - keep as warnings but fix critical ones
+dotnet_diagnostic.CS8602.severity = warning
+dotnet_diagnostic.CS8625.severity = warning
+dotnet_diagnostic.CS8785.severity = none
+# Exception handling
+dotnet_diagnostic.CA2201.severity = suggestion
+dotnet_diagnostic.CA1050.severity = suggestion
+# Analyzer version warnings
+dotnet_diagnostic.CS9057.severity = none
