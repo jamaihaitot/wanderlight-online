@@ -1,5 +1,9 @@
-using Godot;
+using System;
+using System.Linq;
+
 using GdUnit4;
+
+using WanderlightOnline;
 
 namespace WanderlightOnline.Tests.Contract
 {
@@ -8,89 +12,140 @@ namespace WanderlightOnline.Tests.Contract
     [TestSuite]
     public class OperatorContractTests
     {
-        // Contract: Telemetry provides real-time metrics for monitoring
-        // Requirements: connected players, join time, update latency, error rates
         [TestCase]
         public void OperatorProvidesTelemetryMetrics()
         {
-            // Arrange: Mock Operator with telemetry system
-            // Act: Simulate player connections, network activity, and errors
-            // Assert: Connected player count tracked accurately
-            // Assert: Join time metrics recorded for each player
-            // Assert: Update latency metrics updated continuously
-            // Assert: Error rates calculated and exposed
-            AssertThat(false).IsTrue(); // Fails until Operator implemented
+            var op = new Operator();
+
+            // Simulate player joins and latency measurements
+            op.RecordPlayerJoin("p1");
+            op.RecordPlayerJoin("p2");
+            op.RecordUpdateLatency(12.5);
+            op.RecordUpdateLatency(37.5);
+
+            var telemetry = op.CurrentTelemetry;
+            AssertThat(telemetry.ConnectedPlayers).IsEqual(2);
+            AssertThat(telemetry.PlayerJoinTimes.ContainsKey("p1")).IsTrue();
+            AssertThat(telemetry.PlayerJoinTimes.ContainsKey("p2")).IsTrue();
+            AssertThat(telemetry.AverageLatency).IsGreaterEqual(0.0);
+            AssertThat(telemetry.P95Latency).IsGreaterEqual(0.0);
+
+            op.Dispose();
         }
 
-        // Contract: Structured logs capture all key events with context
-        // Requirements: Consistent format, error context, searchable fields
         [TestCase]
-        public void OperatorProvidesStructuredLogs()
+        public void OperatorProvidesStructuredLogging()
         {
-            // Arrange: Mock Operator with logging system
-            // Act: Trigger various game events (joins, errors, actions)
-            // Assert: All events logged in structured format (JSON/key-value)
-            // Assert: Error logs include sufficient context for debugging
-            // Assert: Log levels properly categorized (info, warn, error)
-            // Assert: Timestamps and correlation IDs present
-            AssertThat(false).IsTrue(); // Fails until Operator implemented
+            var op = new Operator();
+
+            op.LogInfo("Player connected", new System.Collections.Generic.Dictionary<string, object> { { "playerId", "p1" } });
+            op.LogWarning("High memory usage", new System.Collections.Generic.Dictionary<string, object> { { "percent", 85 } });
+            op.LogError("Database connection failed", new InvalidOperationException("db-timeout"));
+
+            var logs = op.RecentLogs;
+            AssertThat(logs.Count).IsGreater(0);
+            AssertThat(logs.Any(l => l.Level == LogLevel.Info)).IsTrue();
+            AssertThat(logs.Any(l => l.Level == LogLevel.Warning)).IsTrue();
+            AssertThat(logs.Any(l => l.Level == LogLevel.Error)).IsTrue();
+            AssertThat(logs.All(l => !string.IsNullOrEmpty(l.CorrelationId))).IsTrue();
+            AssertThat(logs.All(l => l.Timestamp > DateTime.MinValue)).IsTrue();
+
+            var error = logs.LastOrDefault(l => l.Level == LogLevel.Error);
+            AssertThat(error).IsNotNull();
+            AssertThat(error!.Context.ContainsKey("exception")).IsTrue();
+            AssertThat(error.Context.ContainsKey("stackTrace")).IsTrue();
+
+            op.Dispose();
         }
 
-        // Contract: World reset command clears all game state
-        // Requirements: Complete state cleanup, notification, atomicity
         [TestCase]
-        public void OperatorCanResetWorldState()
+        public void OperatorProvidesWorldManagement()
         {
-            // Arrange: Game world with players, items, and persistent state
-            // Act: Execute world reset command
-            // Assert: All player data cleared from memory and database
-            // Assert: All world items removed
-            // Assert: All connections gracefully closed
-            // Assert: Reset operation is atomic (all-or-nothing)
-            // Assert: System ready for new players post-reset
-            AssertThat(false).IsTrue(); // Fails until Operator implemented
+            var op = new Operator();
+            op.AddOperator("admin1", OperatorPermission.Admin);
+
+            op.RecordPlayerJoin("p1");
+            op.RecordPlayerJoin("p2");
+            op.RecordUpdateLatency(25.5);
+
+            var result = op.ResetWorld("admin1");
+            AssertThat(result.Success).IsTrue();
+            AssertThat(result.Message.IndexOf("reset", StringComparison.OrdinalIgnoreCase)).IsGreaterEqual(0);
+
+            var telemetry = op.CurrentTelemetry;
+            AssertThat(telemetry.ConnectedPlayers).IsEqual(0);
+            AssertThat(telemetry.PlayerJoinTimes.Count).IsEqual(0);
+            AssertThat(telemetry.UpdateLatencies.Count).IsEqual(0);
+
+            var logs = op.RecentLogs;
+            AssertThat(logs.Any(l => l.Message.Contains("World reset completed", StringComparison.OrdinalIgnoreCase))).IsTrue();
+
+            op.Dispose();
         }
 
-        // Contract: Real-time metrics dashboard accessible to operators
-        // Requirements: Live data updates, historical trends, alerting
-        [TestCase]
-        public void OperatorCanViewRealTimeMetricsDashboard()
-        {
-            // Arrange: Running game with metric collection
-            // Act: Access operator dashboard
-            // Assert: Real-time player count displayed
-            // Assert: Network latency trends visible
-            // Assert: Error rate alerts functional
-            // Assert: Historical data preserved and queryable
-            AssertThat(false).IsTrue(); // Fails until Operator implemented
-        }
-
-        // Contract: Error context in logs enables efficient debugging
-        // Requirements: Stack traces, user context, system state
-        [TestCase]
-        public void OperatorLogsProvideRichErrorContext()
-        {
-            // Arrange: System configured for detailed error logging
-            // Act: Trigger various error conditions
-            // Assert: Stack traces captured for exceptions
-            // Assert: User/player context included in error logs
-            // Assert: System state snapshot available in critical errors
-            // Assert: Correlation IDs link related log entries
-            AssertThat(false).IsTrue(); // Fails until Operator implemented
-        }
-
-        // Contract: Operator permissions enforce administrative access control
-        // Requirements: Authentication, authorization, audit trail
         [TestCase]
         public void OperatorPermissionsEnforceAccessControl()
         {
-            // Arrange: Multiple operator accounts with different permission levels
-            // Act: Attempt various administrative actions
-            // Assert: Only authorized operators can execute world reset
-            // Assert: Read-only operators can view metrics but not modify state
-            // Assert: All operator actions logged for audit trail
-            // Assert: Failed authorization attempts logged and blocked
-            AssertThat(false).IsTrue(); // Fails until Operator implemented
+            var op = new Operator();
+            op.AddOperator("admin1", OperatorPermission.Admin);
+            // 'readonly' operator is added by default in Operator constructor
+
+            var adminResult = op.ResetWorld("admin1");
+            var roResult = op.ResetWorld("readonly");
+            var unknownResult = op.ResetWorld("unknown");
+
+            AssertThat(adminResult.Success).IsTrue();
+            AssertThat(roResult.Success).IsFalse();
+            AssertThat(unknownResult.Success).IsFalse();
+
+            var adminDashboard = op.GetDashboardData("admin1");
+            var roDashboard = op.GetDashboardData("readonly");
+            var unknownDashboard = op.GetDashboardData("unknown");
+
+            AssertThat(adminDashboard).IsNotNull();
+            AssertThat(roDashboard).IsNotNull();
+            AssertThat(unknownDashboard).IsNull();
+
+            op.Dispose();
+        }
+
+        [TestCase]
+        public void OperatorDashboardProvidesOverview()
+        {
+            var op = new Operator();
+            op.AddOperator("admin1", OperatorPermission.Admin);
+
+            op.RecordPlayerJoin("p1");
+            op.RecordUpdateLatency(45.5);
+            op.LogError("Test error");
+
+            var dashboard = op.GetDashboardData("admin1");
+            AssertThat(dashboard).IsNotNull();
+            AssertThat(dashboard!.ContainsKey("connectedPlayers")).IsTrue();
+            AssertThat(dashboard.ContainsKey("averageLatency")).IsTrue();
+            AssertThat(dashboard.ContainsKey("p95Latency")).IsTrue();
+            AssertThat(dashboard.ContainsKey("errorRate")).IsTrue();
+            AssertThat(dashboard.ContainsKey("totalErrors")).IsTrue();
+            AssertThat(dashboard.ContainsKey("historicalDataPoints")).IsTrue();
+            AssertThat(dashboard.ContainsKey("lastUpdated")).IsTrue();
+
+            op.Dispose();
+        }
+
+        [TestCase]
+        public void OperatorLogsContainRichErrorContext()
+        {
+            var op = new Operator();
+            var ex = new ArgumentException("arg");
+            op.LogError("Critical", ex, new System.Collections.Generic.Dictionary<string, object> { { "userId", "p1" } });
+
+            var err = op.RecentLogs.LastOrDefault(l => l.Level == LogLevel.Error);
+            AssertThat(err).IsNotNull();
+            AssertThat(err!.Context.ContainsKey("exception")).IsTrue();
+            AssertThat(err.Context.ContainsKey("stackTrace")).IsTrue();
+            AssertThat(err.Context.ContainsKey("userId")).IsTrue();
+
+            op.Dispose();
         }
     }
 }

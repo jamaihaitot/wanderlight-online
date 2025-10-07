@@ -13,14 +13,21 @@ namespace WanderlightOnline.Tests.Model
         [TestCase]
         public void WorldItemRequiredProperties()
         {
-            // Arrange: Create WorldItem instance
-            // Act: Verify property availability and types
-            // Assert: item_type is non-empty string
-            // Assert: position is valid Vector2
-            // Assert: stack_size is positive integer
-            // Assert: owner is nullable string (display_name)
-            // Assert: persistence_status is boolean
-            AssertThat(false).IsTrue(); // Fails until WorldItem model implemented
+            // Arrange
+            var position = new WanderlightOnline.Vector2(10.5f, -2.25f);
+            var item = new WorldItem("Potion", ItemCategory.Consumable, 5, position, isPersistent: true);
+
+            // Assert
+            AssertThat(item.ItemType).IsEqual("Potion");
+            AssertThat(item.Category).IsEqual(ItemCategory.Consumable);
+            AssertThat(item.Quantity).IsEqual(5);
+            AssertThat(item.MaxStack).IsEqual(Inventory.GetMaxStackFor(ItemCategory.Consumable));
+            AssertThat(item.Position).IsNotNull();
+            AssertThat(item.Position.X).IsEqual(10.5f);
+            AssertThat(item.Position.Y).IsEqual(-2.25f);
+            AssertThat(item.Owner).IsNull();
+            AssertThat(item.IsPersistent).IsTrue();
+            AssertThat(item.InWorld).IsTrue();
         }
 
         // Model: Position determines world coordinates for rendering and collision
@@ -28,13 +35,22 @@ namespace WanderlightOnline.Tests.Model
         [TestCase]
         public void WorldItemPositionManagement()
         {
-            // Arrange: WorldItem with various positions
-            // Act: Set and modify position values
-            // Assert: Position stored with floating-point precision
-            // Assert: Position changes properly tracked
-            // Assert: World bounds enforced if applicable
-            // Assert: Position updates trigger appropriate events
-            AssertThat(false).IsTrue(); // Fails until WorldItem model implemented
+            // Arrange
+            var item = new WorldItem("Wood", ItemCategory.Generic, 10, new WanderlightOnline.Vector2());
+
+            // Act
+            var ok = item.TrySetPosition(new WanderlightOnline.Vector2(123.456f, 789.123f));
+
+            // Assert
+            AssertThat(ok).IsTrue();
+            AssertThat(item.Position.X).IsEqual(123.456f);
+            AssertThat(item.Position.Y).IsEqual(789.123f);
+
+            // Reposition and verify
+            ok = item.TrySetPosition(new WanderlightOnline.Vector2(-50f, 0f));
+            AssertThat(ok).IsTrue();
+            AssertThat(item.Position.X).IsEqual(-50f);
+            AssertThat(item.Position.Y).IsEqual(0f);
         }
 
         // Model: Stack size follows same rules as inventory stacking
@@ -42,13 +58,40 @@ namespace WanderlightOnline.Tests.Model
         [TestCase]
         public void WorldItemStackSizeValidation()
         {
-            // Arrange: WorldItems of different categories
-            // Act: Create items with various stack sizes
-            // Assert: Stack size respects category limits (20 for consumables, 1 for equipment)
-            // Assert: Stack size is positive integer
-            // Assert: Invalid stack sizes rejected
-            // Assert: Stack splitting creates valid new WorldItems
-            AssertThat(false).IsTrue(); // Fails until WorldItem model implemented
+            // Arrange & Act
+            var consumable = new WorldItem("Potion", ItemCategory.Consumable, 20, new WanderlightOnline.Vector2());
+            var equipment = new WorldItem("Sword", ItemCategory.Equipment, 1, new WanderlightOnline.Vector2());
+            var generic = new WorldItem("Wood", ItemCategory.Generic, 10, new WanderlightOnline.Vector2());
+
+            // Assert: Max stack rules
+            AssertThat(consumable.MaxStack).IsEqual(20);
+            AssertThat(equipment.MaxStack).IsEqual(1);
+            AssertThat(generic.MaxStack).IsEqual(20);
+
+            // Assert: AddUpTo respects max
+            int rem = generic.AddUpTo(15); // 10 + 10 (cap 20), remainder 5
+            AssertThat(generic.Quantity).IsEqual(20);
+            AssertThat(rem).IsEqual(5);
+
+            rem = equipment.AddUpTo(1);
+            AssertThat(equipment.Quantity).IsEqual(1);
+            AssertThat(rem).IsEqual(1);
+
+            // Assert: invalid creations
+            try { var _ = new WorldItem("Potion", ItemCategory.Consumable, 0, new WanderlightOnline.Vector2()); AssertThat(false).IsTrue(); }
+            catch (System.ArgumentOutOfRangeException) { /* expected */ }
+
+            try { var _ = new WorldItem("", ItemCategory.Generic, 1, new WanderlightOnline.Vector2()); AssertThat(false).IsTrue(); }
+            catch (System.ArgumentException) { /* expected */ }
+
+            // Split
+            var splitOk = consumable.TrySplit(5, out var splitItem);
+            AssertThat(splitOk).IsTrue();
+            AssertThat(splitItem).IsNotNull();
+            AssertThat(consumable.Quantity).IsEqual(15);
+            AssertThat(splitItem!.Quantity).IsEqual(5);
+            AssertThat(splitItem.ItemType).IsEqual("Potion");
+            AssertThat(splitItem.Category).IsEqual(ItemCategory.Consumable);
         }
 
         // Model: Owner property tracks pickup state and reservation
@@ -56,13 +99,30 @@ namespace WanderlightOnline.Tests.Model
         [TestCase]
         public void WorldItemOwnershipTracking()
         {
-            // Arrange: WorldItems in various ownership states
-            // Act: Modify owner property
-            // Assert: Null owner indicates item is available for pickup
-            // Assert: Non-null owner matches valid player display_name
-            // Assert: Owner changes trigger appropriate state updates
-            // Assert: Ownership transitions maintain data consistency
-            AssertThat(false).IsTrue(); // Fails until WorldItem model implemented
+            var item = new WorldItem("Potion", ItemCategory.Consumable, 3, new WanderlightOnline.Vector2());
+
+            // Initially available
+            AssertThat(item.Owner).IsNull();
+            AssertThat(item.InWorld).IsTrue();
+
+            // Reserve and idempotent reserve
+            AssertThat(item.TryReserve("Alice")).IsTrue();
+            AssertThat(item.Owner).IsEqual("Alice");
+            AssertThat(item.TryReserve("Alice")).IsTrue();
+
+            // Different player cannot override reservation
+            AssertThat(item.TryReserve("Bob")).IsFalse();
+            AssertThat(item.Owner).IsEqual("Alice");
+
+            // Cancel reservation
+            AssertThat(item.CancelReservation("Bob")).IsFalse();
+            AssertThat(item.CancelReservation("Alice")).IsTrue();
+            AssertThat(item.Owner).IsNull();
+
+            // Pickup makes item leave world
+            AssertThat(item.TryPickup("Alice")).IsTrue();
+            AssertThat(item.InWorld).IsFalse();
+            AssertThat(item.Owner).IsEqual("Alice");
         }
 
         // Model: Persistence status controls database storage behavior
@@ -70,13 +130,17 @@ namespace WanderlightOnline.Tests.Model
         [TestCase]
         public void WorldItemPersistenceManagement()
         {
-            // Arrange: WorldItems with different persistence settings
-            // Act: Toggle persistence status
-            // Assert: Persistent items survive world reset
-            // Assert: Non-persistent items are temporary
-            // Assert: Persistence flag affects storage operations
-            // Assert: Cleanup operations respect persistence settings
-            AssertThat(false).IsTrue(); // Fails until WorldItem model implemented
+            var persistentItem = new WorldItem("Relic", ItemCategory.Equipment, 1, new WanderlightOnline.Vector2(), isPersistent: true);
+            var tempItem = new WorldItem("Leaf", ItemCategory.Generic, 1, new WanderlightOnline.Vector2(), isPersistent: false);
+
+            AssertThat(persistentItem.IsPersistent).IsTrue();
+            AssertThat(tempItem.IsPersistent).IsFalse();
+
+            // Toggle
+            tempItem.SetPersistence(true);
+            AssertThat(tempItem.IsPersistent).IsTrue();
+            persistentItem.SetPersistence(false);
+            AssertThat(persistentItem.IsPersistent).IsFalse();
         }
 
         // Model: WorldItem lifecycle from drop to pickup
@@ -84,13 +148,28 @@ namespace WanderlightOnline.Tests.Model
         [TestCase]
         public void WorldItemLifecycleManagement()
         {
-            // Arrange: Complete item lifecycle scenario
-            // Act: Drop item, modify state, pickup item
-            // Assert: Dropped items appear in world at correct position
-            // Assert: Items can be reserved during pickup attempt
-            // Assert: Successful pickup removes item from world
-            // Assert: Failed pickup restores item availability
-            AssertThat(false).IsTrue(); // Fails until WorldItem model implemented
+            var dropPos = new WanderlightOnline.Vector2(5f, 6f);
+            var item = new WorldItem("Wood", ItemCategory.Generic, 2, dropPos);
+
+            // Dropped in world
+            AssertThat(item.InWorld).IsTrue();
+            AssertThat(item.Position.X).IsEqual(5f);
+            AssertThat(item.Position.Y).IsEqual(6f);
+
+            // Reserve and attempt split -> pickup part
+            AssertThat(item.TryReserve("Charlie")).IsTrue();
+            AssertThat(item.Owner).IsEqual("Charlie");
+
+            // Drop to new pos and ensure availability cleared
+            item.Drop(new WanderlightOnline.Vector2(7f, 8f));
+            AssertThat(item.InWorld).IsTrue();
+            AssertThat(item.Owner).IsNull();
+            AssertThat(item.Position.X).IsEqual(7f);
+            AssertThat(item.Position.Y).IsEqual(8f);
+
+            // Pickup
+            AssertThat(item.TryPickup("Charlie")).IsTrue();
+            AssertThat(item.InWorld).IsFalse();
         }
     }
 }
