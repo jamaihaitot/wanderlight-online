@@ -37,60 +37,9 @@ dotnet_separate_import_directive_groups = true
 # Disable or relax rules until codebase is ready
 # File header
 dotnet_diagnostic.SA1633.severity = none
-dotnet_diagnostic.SA1636.severity = none
 # Prefix 'this.'
 dotnet_diagnostic.SA1101.severity = none
 # Using directives must be placed correctly
-dotnet_diagnostic.SA1200.severity = none
-dotnet_diagnostic.SA1210.severity = none
+dotnet_diagnostic.SA1200.severity = suggestion
 # Field naming (_camelCase)
 dotnet_diagnostic.SA1309.severity = none
-# Blank lines
-dotnet_diagnostic.SA1515.severity = none
-dotnet_diagnostic.SA1516.severity = none
-dotnet_diagnostic.SA1505.severity = none
-dotnet_diagnostic.SA1507.severity = none
-# Multiple types per file
-dotnet_diagnostic.SA1402.severity = none
-# Braces
-dotnet_diagnostic.SA1503.severity = none
-dotnet_diagnostic.SA1501.severity = none
-dotnet_diagnostic.SA1512.severity = none
-# Element ordering
-dotnet_diagnostic.SA1201.severity = none
-dotnet_diagnostic.SA1202.severity = none
-dotnet_diagnostic.SA1203.severity = none
-dotnet_diagnostic.SA1208.severity = none
-dotnet_diagnostic.SA1214.severity = none
-# Naming
-dotnet_diagnostic.SA1649.severity = none
-# Other
-dotnet_diagnostic.SA1122.severity = none
-dotnet_diagnostic.SA1135.severity = none
-dotnet_diagnostic.SA0001.severity = none
-dotnet_diagnostic.SA1518.severity = none
-# Performance rules - keep as suggestions to avoid forcing code changes
-dotnet_diagnostic.CA1845.severity = suggestion
-# Code quality - disable CA1822 to avoid forcing static changes
-dotnet_diagnostic.CA1822.severity = none
-dotnet_diagnostic.CA1805.severity = none
-# Naming rules - disable to avoid forcing naming changes
-dotnet_diagnostic.CA1707.severity = none
-dotnet_diagnostic.CA1711.severity = none
-dotnet_diagnostic.CA1716.severity = none
-# Other code analysis rules
-dotnet_diagnostic.CA1869.severity = suggestion
-dotnet_diagnostic.CA1854.severity = suggestion
-dotnet_diagnostic.CA1816.severity = suggestion
-dotnet_diagnostic.CA1311.severity = suggestion
-dotnet_diagnostic.CA1304.severity = suggestion
-dotnet_diagnostic.CA1001.severity = warning
-# Nullable reference warnings - keep as warnings but fix critical ones
-dotnet_diagnostic.CS8602.severity = warning
-dotnet_diagnostic.CS8625.severity = warning
-dotnet_diagnostic.CS8785.severity = none
-# Exception handling
-dotnet_diagnostic.CA2201.severity = suggestion
-dotnet_diagnostic.CA1050.severity = suggestion
-# Analyzer version warnings
-dotnet_diagnostic.CS9057.severity = none
