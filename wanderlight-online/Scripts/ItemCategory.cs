@@ -1,5 +1,7 @@
+// <copyright file="ItemCategory.cs" company="Wanderlight Online">
 // Copyright (c) 2025 Wanderlight Online
-// ItemCategory.cs
+// </copyright>
+
 namespace WanderlightOnline
 {
     /// <summary>

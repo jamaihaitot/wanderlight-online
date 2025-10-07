@@ -1,5 +1,7 @@
+// <copyright file="Player.cs" company="Wanderlight Online">
 // Copyright (c) 2025 Wanderlight Online
-// Player.cs
+// </copyright>
+
 namespace WanderlightOnline
 {
 

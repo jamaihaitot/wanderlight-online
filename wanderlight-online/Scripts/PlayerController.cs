@@ -1,7 +1,6 @@
 // <copyright file="PlayerController.cs" company="Wanderlight Online">
 // Copyright (c) 2025 Wanderlight Online
 // </copyright>
-// PlayerController.cs
 
 namespace WanderlightOnline
 {

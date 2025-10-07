@@ -1,3 +1,7 @@
+// <copyright file="test_operator.cs" company="Wanderlight Online">
+// Copyright (c) 2025 Wanderlight Online
+// </copyright>
+
 namespace WanderlightOnline.Tests.Contract
 {
     using GdUnit4;

@@ -1,3 +1,7 @@
+// <copyright file="PlayerManagerContractTests.cs" company="Wanderlight Online">
+// Copyright (c) 2025 Wanderlight Online
+// </copyright>
+
 using Godot;
 using GdUnit4;
 using WanderlightOnline;

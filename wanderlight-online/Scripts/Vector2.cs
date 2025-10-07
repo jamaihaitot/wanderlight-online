@@ -1,3 +1,7 @@
+// <copyright file="Vector2.cs" company="Wanderlight Online">
+// Copyright (c) 2025 Wanderlight Online
+// </copyright>
+
 namespace WanderlightOnline
 {
     /// <summary>

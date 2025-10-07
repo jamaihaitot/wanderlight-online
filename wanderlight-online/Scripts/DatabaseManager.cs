@@ -1,7 +1,7 @@
 // <copyright file="DatabaseManager.cs" company="Wanderlight Online">
 // Copyright (c) 2025 Wanderlight Online
 // </copyright>
-// DatabaseManager.cs
+
 namespace WanderlightOnline
 {
     using System;
