@@ -13,7 +13,7 @@ namespace WanderlightOnline.Tests.Contract
     public class OperatorContractTests
     {
         [TestCase]
-        public void OperatorProvidesTelemetryMetrics()
+        public static void OperatorProvidesTelemetryMetrics()
         {
             var op = new Operator();
 
@@ -34,7 +34,7 @@ namespace WanderlightOnline.Tests.Contract
         }
 
         [TestCase]
-        public void OperatorProvidesStructuredLogging()
+        public static void OperatorProvidesStructuredLogging()
         {
             var op = new Operator();
 
@@ -59,7 +59,7 @@ namespace WanderlightOnline.Tests.Contract
         }
 
         [TestCase]
-        public void OperatorProvidesWorldManagement()
+        public static void OperatorProvidesWorldManagement()
         {
             var op = new Operator();
             op.AddOperator("admin1", OperatorPermission.Admin);
@@ -84,7 +84,7 @@ namespace WanderlightOnline.Tests.Contract
         }
 
         [TestCase]
-        public void OperatorPermissionsEnforceAccessControl()
+        public static void OperatorPermissionsEnforceAccessControl()
         {
             var op = new Operator();
             op.AddOperator("admin1", OperatorPermission.Admin);
@@ -110,7 +110,7 @@ namespace WanderlightOnline.Tests.Contract
         }
 
         [TestCase]
-        public void OperatorDashboardProvidesOverview()
+        public static void OperatorDashboardProvidesOverview()
         {
             var op = new Operator();
             op.AddOperator("admin1", OperatorPermission.Admin);
@@ -133,7 +133,7 @@ namespace WanderlightOnline.Tests.Contract
         }
 
         [TestCase]
-        public void OperatorLogsContainRichErrorContext()
+        public static void OperatorLogsContainRichErrorContext()
         {
             var op = new Operator();
             var ex = new ArgumentException("arg");

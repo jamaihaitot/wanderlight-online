@@ -17,7 +17,7 @@ namespace WanderlightOnline.Tests.Performance
     public class LatencyPerformanceTests
     {
         [TestCase]
-        public void MovementSynchronizationUnder200Ms()
+        public static void MovementSynchronizationUnder200Ms()
         {
             // Arrange: Mock movement update
             var stopwatch = new Stopwatch();
@@ -35,7 +35,7 @@ namespace WanderlightOnline.Tests.Performance
         }
 
         [TestCase]
-        public void MultiplePlayerUpdatesUnder200Ms()
+        public static void MultiplePlayerUpdatesUnder200Ms()
         {
             // Arrange: Simulate multiple player position updates
             var stopwatch = new Stopwatch();
@@ -60,7 +60,7 @@ namespace WanderlightOnline.Tests.Performance
         }
 
         [TestCase]
-        public void ItemStackOperationsUnder200Ms()
+        public static void ItemStackOperationsUnder200Ms()
         {
             // Arrange: Create item stack operations
             var stopwatch = new Stopwatch();
@@ -85,7 +85,7 @@ namespace WanderlightOnline.Tests.Performance
         }
 
         [TestCase]
-        public void VectorMathBenchmarkUnder10Ms()
+        public static void VectorMathBenchmarkUnder10Ms()
         {
             // Arrange: Vector math operations
             var stopwatch = new Stopwatch();
@@ -110,7 +110,7 @@ namespace WanderlightOnline.Tests.Performance
         }
 
         [TestCase]
-        public void BatchItemStackCreationUnder200Ms()
+        public static void BatchItemStackCreationUnder200Ms()
         {
             // Arrange: Simulate batch creation
             var stopwatch = new Stopwatch();
@@ -132,7 +132,7 @@ namespace WanderlightOnline.Tests.Performance
         }
 
         [TestCase]
-        public void ComplexVectorOperationsUnder200Ms()
+        public static void ComplexVectorOperationsUnder200Ms()
         {
             // Arrange: Complex vector operations (movement prediction, pathfinding)
             var stopwatch = new Stopwatch();
@@ -162,7 +162,7 @@ namespace WanderlightOnline.Tests.Performance
         }
 
         [TestCase]
-        public void ItemCategoryOperationsUnder200Ms()
+        public static void ItemCategoryOperationsUnder200Ms()
         {
             // Arrange: Test category-specific operations
             var stopwatch = new Stopwatch();
@@ -193,7 +193,7 @@ namespace WanderlightOnline.Tests.Performance
         }
 
         [TestCase]
-        public void InventorySerializationUnder200Ms()
+        public static void InventorySerializationUnder200Ms()
         {
             // Arrange: Create and serialize inventory
             var stopwatch = new Stopwatch();
@@ -211,7 +211,7 @@ namespace WanderlightOnline.Tests.Performance
         }
 
         [TestCase]
-        public void SimulatedGameTickUnder200Ms()
+        public static void SimulatedGameTickUnder200Ms()
         {
             // Arrange: Simulate a full game tick
             var stopwatch = new Stopwatch();
@@ -243,7 +243,7 @@ namespace WanderlightOnline.Tests.Performance
         }
 
         [TestCase]
-        public void HighFrequencyVectorUpdatesUnder200Ms()
+        public static void HighFrequencyVectorUpdatesUnder200Ms()
         {
             // Arrange: Simulate high-frequency position updates (20Hz)
             var stopwatch = new Stopwatch();

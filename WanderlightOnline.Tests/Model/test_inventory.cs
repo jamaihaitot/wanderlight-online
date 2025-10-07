@@ -13,7 +13,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: Inventory has exactly 12 slots for items
         // Requirements: Fixed capacity, slot indexing, bounds checking
         [TestCase]
-        public void InventorySlotCapacityManagement()
+        public static void InventorySlotCapacityManagement()
         {
             // Arrange: New Inventory instance
             var inventory = new Inventory();
@@ -46,7 +46,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: Item stacking follows category-specific rules
         // Requirements: Stack size limits, category enforcement, overflow handling
         [TestCase]
-        public void InventoryItemStackingRules()
+        public static void InventoryItemStackingRules()
         {
             // Arrange: Inventory with various item types
             var inventory = new Inventory();
@@ -78,7 +78,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: Item categories determine behavior and constraints
         // Requirements: Category validation, behavior enforcement, metadata
         [TestCase]
-        public void InventoryItemCategorization()
+        public static void InventoryItemCategorization()
         {
             // Arrange: Items of different categories
             var inventory = new Inventory();
@@ -104,7 +104,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: ItemStack manages quantity and metadata
         // Requirements: Quantity tracking, type safety, validation
         [TestCase]
-        public void InventoryItemStackValidation()
+        public static void InventoryItemStackValidation()
         {
             // Arrange & Act: Create ItemStack instances
             var consumableStack = new ItemStack("Potion", ItemCategory.Consumable, 15);
@@ -141,7 +141,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: Inventory operations maintain consistency
         // Requirements: Add/remove operations, slot management, validation
         [TestCase]
-        public void InventoryOperationConsistency()
+        public static void InventoryOperationConsistency()
         {
             // Arrange: Inventory with partial contents
             var inventory = new Inventory();
@@ -172,7 +172,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: Inventory state representation for persistence
         // Requirements: Serialization, state consistency, recovery
         [TestCase]
-        public void InventoryStateRepresentation()
+        public static void InventoryStateRepresentation()
         {
             // Arrange: Inventory with complex item arrangement
             var inventory = new Inventory();

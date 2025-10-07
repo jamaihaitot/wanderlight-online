@@ -14,7 +14,7 @@ namespace WanderlightOnline.Tests.Contract
         // Contract: WebSocket connection establishes and maintains real-time communication
         // Requirements: Connection handling, reconnection, heartbeat
         [TestCase]
-        public void NetworkEstablishesWebSocketConnection()
+        public static void NetworkEstablishesWebSocketConnection()
         {
             // Arrange: Create NetworkManager instance
             var networkManager = new NetworkManager();
@@ -36,7 +36,7 @@ namespace WanderlightOnline.Tests.Contract
         // Contract: Message queuing handles network congestion and ordering
         // Requirements: FIFO ordering, buffering during disconnection, no message loss
         [TestCase]
-        public void NetworkHandlesMessageQueuingAndOrdering()
+        public static void NetworkHandlesMessageQueuingAndOrdering()
         {
             // Arrange: NetworkManager with connection
             var networkManager = new NetworkManager();
@@ -73,7 +73,7 @@ namespace WanderlightOnline.Tests.Contract
         // Contract: State deltas delivered at 20 Hz for real-time updates
         // Requirements: ≤150ms p95 latency, consistent update frequency
         [TestCase]
-        public void NetworkDeliversStateDeltasAt20Hz()
+        public static void NetworkDeliversStateDeltasAt20Hz()
         {
             // Arrange: NetworkManager with connection
             var networkManager = new NetworkManager();
@@ -105,7 +105,7 @@ namespace WanderlightOnline.Tests.Contract
         // Contract: Mini-snapshots every 2s provide state correction
         // Requirements: Periodic full state sync, drift correction
         [TestCase]
-        public void NetworkSendsMiniSnapshotsForCorrection()
+        public static void NetworkSendsMiniSnapshotsForCorrection()
         {
             // Arrange: NetworkManager with connection
             var networkManager = new NetworkManager();
@@ -130,7 +130,7 @@ namespace WanderlightOnline.Tests.Contract
         // Contract: Atomic handling prevents race conditions in concurrent actions
         // Requirements: Transaction safety, conflict resolution
         [TestCase]
-        public void NetworkHandlesConcurrentActionsAtomically()
+        public static void NetworkHandlesConcurrentActionsAtomically()
         {
             // Arrange: NetworkManager with connection
             var networkManager = new NetworkManager();
@@ -160,7 +160,7 @@ namespace WanderlightOnline.Tests.Contract
         // Contract: Reliable reconnection restores player state
         // Requirements: State restoration, session continuity, data consistency
         [TestCase]
-        public void NetworkHandlesReconnectionReliably()
+        public static void NetworkHandlesReconnectionReliably()
         {
             // Arrange: NetworkManager with initial connection
             var networkManager = new NetworkManager();

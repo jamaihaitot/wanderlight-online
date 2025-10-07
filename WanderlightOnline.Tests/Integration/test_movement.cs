@@ -12,7 +12,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Real-time movement synchronization across all players
         // Components: NetworkManager, PlayerController, state delta system
         [TestCase]
-        public void RealTimeMovementSynchronization()
+        public static void RealTimeMovementSynchronization()
         {
             // Arrange: Multiple connected players in same area
             var networkManager = new NetworkManager();
@@ -34,7 +34,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Movement collision detection and validation
         // Components: PlayerController, world boundaries, collision system
         [TestCase]
-        public void MovementCollisionDetection()
+        public static void MovementCollisionDetection()
         {
             // Arrange: Player with movement controller
             var playerManager = new PlayerManager();
@@ -57,7 +57,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Movement state correction via mini-snapshots
         // Components: NetworkManager, state synchronization, drift correction
         [TestCase]
-        public void MovementStateCorrectionMiniSnapshots()
+        public static void MovementStateCorrectionMiniSnapshots()
         {
             // Arrange: Network manager with state synchronization
             var networkManager = new NetworkManager();
@@ -75,7 +75,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: High-frequency movement under network stress
         // Components: NetworkManager, bandwidth management, quality adaptation
         [TestCase]
-        public void MovementUnderNetworkStress()
+        public static void MovementUnderNetworkStress()
         {
             // Arrange: Player with movement controller
             var playerManager = new PlayerManager();
@@ -100,7 +100,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Movement area-of-interest optimization
         // Components: Spatial partitioning, visibility culling, update filtering
         [TestCase]
-        public void MovementAreaOfInterestOptimization()
+        public static void MovementAreaOfInterestOptimization()
         {
             // Arrange: Players distributed across world
             var playerManager = new PlayerManager();
@@ -128,7 +128,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Movement persistence and session restoration
         // Components: DatabaseManager, PlayerController, state recovery
         [TestCase]
-        public void MovementPersistenceAndRestoration()
+        public static void MovementPersistenceAndRestoration()
         {
             // Arrange: Player with specific position
             var playerManager = new PlayerManager();

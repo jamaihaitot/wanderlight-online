@@ -14,7 +14,7 @@ namespace WanderlightOnline.Tests.Unit
     {
         // Test: Vector2 constructor initializes values correctly
         [TestCase]
-        public void ConstructorInitializesValues()
+        public static void ConstructorInitializesValues()
         {
             var v1 = new Vector2(3.5f, 7.2f);
             AssertThat(v1.X).IsEqual(3.5f);
@@ -27,7 +27,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Length calculation is accurate
         [TestCase]
-        public void LengthCalculatesCorrectly()
+        public static void LengthCalculatesCorrectly()
         {
             var v1 = new Vector2(3f, 4f);
             AssertThat(v1.Length).IsEqual(5f);
@@ -41,7 +41,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Normalized vector has length 1
         [TestCase]
-        public void NormalizedProducesUnitVector()
+        public static void NormalizedProducesUnitVector()
         {
             var v1 = new Vector2(3f, 4f);
             var normalized = v1.Normalized();
@@ -57,7 +57,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Normalizing zero vector returns zero
         [TestCase]
-        public void NormalizedZeroVectorReturnsZero()
+        public static void NormalizedZeroVectorReturnsZero()
         {
             var v = new Vector2(0f, 0f);
             var normalized = v.Normalized();
@@ -68,7 +68,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Vector addition operator
         [TestCase]
-        public void AdditionOperatorWorks()
+        public static void AdditionOperatorWorks()
         {
             var v1 = new Vector2(1f, 2f);
             var v2 = new Vector2(3f, 4f);
@@ -80,7 +80,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Vector subtraction operator
         [TestCase]
-        public void SubtractionOperatorWorks()
+        public static void SubtractionOperatorWorks()
         {
             var v1 = new Vector2(5f, 7f);
             var v2 = new Vector2(2f, 3f);
@@ -92,7 +92,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Vector scalar multiplication (both orders)
         [TestCase]
-        public void MultiplicationOperatorWorks()
+        public static void MultiplicationOperatorWorks()
         {
             var v = new Vector2(2f, 3f);
 
@@ -107,7 +107,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Vector scalar division
         [TestCase]
-        public void DivisionOperatorWorks()
+        public static void DivisionOperatorWorks()
         {
             var v = new Vector2(10f, 20f);
             var result = v / 2f;
@@ -118,7 +118,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Negative values work correctly
         [TestCase]
-        public void NegativeValuesWorkCorrectly()
+        public static void NegativeValuesWorkCorrectly()
         {
             var v1 = new Vector2(-5f, -10f);
             var v2 = new Vector2(3f, 4f);
@@ -134,7 +134,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Very small values (floating point precision)
         [TestCase]
-        public void SmallValuesMaintainPrecision()
+        public static void SmallValuesMaintainPrecision()
         {
             var v = new Vector2(0.0001f, 0.0002f);
             var doubled = v * 2f;
@@ -145,7 +145,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Very large values
         [TestCase]
-        public void LargeValuesWorkCorrectly()
+        public static void LargeValuesWorkCorrectly()
         {
             var v = new Vector2(1000000f, 2000000f);
             var halved = v / 2f;
@@ -156,7 +156,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Operations preserve original vector immutability
         [TestCase]
-        public void OperationsDoNotModifyOriginal()
+        public static void OperationsDoNotModifyOriginal()
         {
             var v1 = new Vector2(5f, 10f);
             var originalX = v1.X;

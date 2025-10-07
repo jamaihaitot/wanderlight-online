@@ -13,7 +13,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Inventory state persists across player sessions
         // Components: DatabaseManager, Inventory, Player state management
         [TestCase]
-        public void InventoryStatePersistsAcrossSessions()
+        public static void InventoryStatePersistsAcrossSessions()
         {
             // Arrange: Player with populated inventory (simulated session persistence)
             var originalInventory = new Inventory();
@@ -53,7 +53,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Inventory changes saved to database in real-time
         // Components: DatabaseManager, Inventory operations, transaction management
         [TestCase]
-        public void InventoryChangesSavedRealTime()
+        public static void InventoryChangesSavedRealTime()
         {
             // Arrange: Player with active inventory operations
             var inventory = new Inventory();
@@ -84,7 +84,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Inventory persistence handles database failures gracefully
         // Components: Error handling, rollback mechanisms, data integrity
         [TestCase]
-        public void InventoryPersistenceErrorHandling()
+        public static void InventoryPersistenceErrorHandling()
         {
             // Arrange: System with potential serialization/deserialization issues
             var inventory = new Inventory();
@@ -118,7 +118,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Concurrent inventory operations maintain atomicity
         // Components: Transaction safety, lock management, conflict resolution
         [TestCase]
-        public void ConcurrentInventoryOperationsAtomicity()
+        public static void ConcurrentInventoryOperationsAtomicity()
         {
             // Arrange: Inventory for concurrent testing
             var inventory = new Inventory();
@@ -138,7 +138,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Inventory backup and recovery procedures
         // Components: Data backup, corruption detection, state restoration
         [TestCase]
-        public void InventoryBackupAndRecovery()
+        public static void InventoryBackupAndRecovery()
         {
             // Arrange: Inventory with data for backup
             var original = new Inventory();
@@ -160,7 +160,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Large inventory datasets performance validation
         // Components: Query optimization, pagination, bulk operations
         [TestCase]
-        public void LargeInventoryDatasetPerformance()
+        public static void LargeInventoryDatasetPerformance()
         {
             // Arrange: Fill inventory to capacity
             var inventory = new Inventory();

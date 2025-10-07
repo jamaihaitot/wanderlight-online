@@ -11,7 +11,7 @@ namespace WanderlightOnline.Tests.Integration
     {
         // Integration: Complete world reset clears all game state
         [TestCase]
-        public void CompleteWorldResetClearsAllState()
+        public static void CompleteWorldResetClearsAllState()
         {
             // Arrange: Game world with players and state
             using var @operator = new Operator();
@@ -29,7 +29,7 @@ namespace WanderlightOnline.Tests.Integration
 
         // Integration: World reset operation is atomic and recoverable
         [TestCase]
-        public void WorldResetOperationAtomicAndRecoverable()
+        public static void WorldResetOperationAtomicAndRecoverable()
         {
             // Arrange: System with state to reset
             using var @operator = new Operator();
@@ -44,7 +44,7 @@ namespace WanderlightOnline.Tests.Integration
 
         // Integration: World reset preserves system configuration and logs
         [TestCase]
-        public void WorldResetPreservesSystemConfiguration()
+        public static void WorldResetPreservesSystemConfiguration()
         {
             // Arrange: System with configuration
             using var @operator = new Operator();
@@ -61,7 +61,7 @@ namespace WanderlightOnline.Tests.Integration
 
         // Integration: World reset handles active player sessions gracefully
         [TestCase]
-        public void WorldResetHandlesActiveSessionsGracefully()
+        public static void WorldResetHandlesActiveSessionsGracefully()
         {
             // Arrange: System with active players
             using var @operator = new Operator();
@@ -78,7 +78,7 @@ namespace WanderlightOnline.Tests.Integration
 
         // Integration: World reset performance under large state volumes
         [TestCase]
-        public void WorldResetPerformanceUnderLoad()
+        public static void WorldResetPerformanceUnderLoad()
         {
             // Arrange: System with multiple players
             using var @operator = new Operator();
@@ -101,7 +101,7 @@ namespace WanderlightOnline.Tests.Integration
 
         // Integration: Post-reset system validation and health checks
         [TestCase]
-        public void PostResetSystemValidationAndHealth()
+        public static void PostResetSystemValidationAndHealth()
         {
             // Arrange: System monitoring infrastructure
             using var @operator = new Operator();

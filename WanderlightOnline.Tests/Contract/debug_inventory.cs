@@ -8,7 +8,7 @@ using static GdUnit4.Assertions;
 public partial class DebugInventoryTests
 {
     [TestCase]
-    public void DebugInventoryCapacity()
+    public static void DebugInventoryCapacity()
     {
         var inventory = new Inventory();
 
