@@ -2,12 +2,12 @@
 // Copyright (c) 2025 Wanderlight Online
 // </copyright>
 
+using Godot;
+using GdUnit4;
+using WanderlightOnline;
+
 namespace WanderlightOnline.Tests.Contract
 {
-    using System;
-    using GdUnit4;
-    using Godot;
-    using WanderlightOnline;
     using static Assertions;
 
     [TestSuite]
