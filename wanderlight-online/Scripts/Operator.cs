@@ -7,8 +7,8 @@ namespace WanderlightOnline
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using System.Text.Json;
+    using System.Threading;
 
     /// <summary>
     /// Represents log levels for structured logging.
