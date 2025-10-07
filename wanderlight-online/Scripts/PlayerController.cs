@@ -50,7 +50,7 @@ namespace WanderlightOnline
             }
 
             // Update player position
-            player.Position += this.velocity * delta;
+            this.player.Position += this.velocity * delta;
         }
 
         /// <summary>

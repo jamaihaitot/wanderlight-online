@@ -159,7 +159,7 @@ namespace WanderlightOnline.Tests.Contract
         /// </summary>
         public void Dispose()
         {
-            operatorInstance?.Dispose();
+            this.operatorInstance?.Dispose();
             GC.SuppressFinalize(this);
         }
     }
