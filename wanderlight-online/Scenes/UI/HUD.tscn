@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dcjtla5yfn6kt"]
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="ConnectionStatus" type="Label" parent="."]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 200.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "Connected"
+
+[node name="Instructions" type="Label" parent="."]
+offset_left = 10.0
+offset_top = 40.0
+offset_right = 400.0
+offset_bottom = 100.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+text = "WASD/Arrows: Move
+TAB: Open Inventory
+E: Pick up item"

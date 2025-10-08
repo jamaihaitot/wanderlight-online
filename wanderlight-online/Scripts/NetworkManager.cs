@@ -126,6 +126,8 @@ namespace WanderlightOnline
         private const int ConnectionTimeoutMs = 30000; // 30 seconds
         private const int MaxLatencyMs = 150; // 150ms p95 target
 
+        private static NetworkManager instance;
+
         private NetworkConnectionState connectionState = NetworkConnectionState.Disconnected;
         private readonly Queue<NetworkMessage> messageQueue = new Queue<NetworkMessage>();
         private readonly Dictionary<string, DateTime> messageSentTimes = new Dictionary<string, DateTime>();
@@ -145,12 +147,38 @@ namespace WanderlightOnline
         private int totalMessagesReceived = 0;
         private int messagesLost = 0;
 
+        // Events for client-side rendering
+        /// <summary>Event triggered when a player joins the game.</summary>
+        public event Action<string, float, float> OnPlayerJoined;
+
+        /// <summary>Event triggered when a player leaves the game.</summary>
+        public event Action<string> OnPlayerLeft;
+
+        /// <summary>Event triggered when a player moves.</summary>
+        public event Action<string, float, float> OnPlayerMoved;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="NetworkManager"/> class.
         /// </summary>
         public NetworkManager()
         {
             this.databaseManager = DatabaseManager.Instance;
+        }
+
+        /// <summary>
+        /// Gets the singleton instance of NetworkManager.
+        /// </summary>
+        public static NetworkManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new NetworkManager();
+                }
+
+                return instance;
+            }
         }
 
         /// <summary>
@@ -726,6 +754,46 @@ namespace WanderlightOnline
             {
                 return false; // Simulate network failure
             }
+        }
+
+        /// <summary>
+        /// Sends a position update to the server for the specified player.
+        /// </summary>
+        /// <param name="displayName">The player's display name.</param>
+        /// <param name="position">The player's position.</param>
+        public void SendPositionUpdate(string displayName, WanderlightOnline.Vector2 position)
+        {
+            if (string.IsNullOrEmpty(displayName))
+            {
+                return;
+            }
+
+            // Send position delta through SpacetimeDB
+            var deltaData = $"{{\"x\":{position.X},\"y\":{position.Y}}}";
+            this.SendStateDelta(displayName, deltaData);
+
+            // Trigger event for local rendering
+            this.OnPlayerMoved?.Invoke(displayName, position.X, position.Y);
+        }
+
+        /// <summary>
+        /// Triggers the player joined event.
+        /// </summary>
+        /// <param name="displayName">The player's display name.</param>
+        /// <param name="x">X position.</param>
+        /// <param name="y">Y position.</param>
+        public void TriggerPlayerJoined(string displayName, float x, float y)
+        {
+            this.OnPlayerJoined?.Invoke(displayName, x, y);
+        }
+
+        /// <summary>
+        /// Triggers the player left event.
+        /// </summary>
+        /// <param name="displayName">The player's display name.</param>
+        public void TriggerPlayerLeft(string displayName)
+        {
+            this.OnPlayerLeft?.Invoke(displayName);
         }
     }
 }
