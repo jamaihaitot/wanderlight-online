@@ -1,7 +1,6 @@
 // <copyright file="NetworkManager.cs" company="Wanderlight Online">
 // Copyright (c) 2025 Wanderlight Online
 // </copyright>
-// NetworkManager.cs
 
 // NOTE: GdUnit4 C# Limitation (2025-10-03):
 // GdUnit4 for C# does not support direct assertions on primitive int values (e.g., assert_int, AssertThat(int)).
@@ -245,6 +244,7 @@ namespace WanderlightOnline
                     {
                         this.connectionState = NetworkConnectionState.Connected;
                         this.lastHeartbeat = DateTime.UtcNow;
+
                         // Don't reset delta/snapshot timestamps on connect to allow immediate sends
                     }
 

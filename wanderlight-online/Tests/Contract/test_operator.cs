@@ -1,3 +1,7 @@
+// <copyright file="test_operator.cs" company="Wanderlight Online">
+// Copyright (c) 2025 Wanderlight Online
+// </copyright>
+
 namespace WanderlightOnline.Tests.Contract
 {
     using GdUnit4;
@@ -8,7 +12,7 @@ namespace WanderlightOnline.Tests.Contract
     /// Contract tests for the Operator telemetry and logging system.
     /// </summary>
     [TestSuite]
-    public class OperatorContractTests
+    public class OperatorContractTests : IDisposable
     {
         private Operator operatorInstance = null!;
 
@@ -152,6 +156,15 @@ namespace WanderlightOnline.Tests.Contract
             {
                 readOnlyOp.Dispose();
             }
+        }
+
+        /// <summary>
+        /// Disposes resources used by the test class.
+        /// </summary>
+        public void Dispose()
+        {
+            this.operatorInstance?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

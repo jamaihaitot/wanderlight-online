@@ -10,7 +10,7 @@ namespace WanderlightOnline.Tests.Contract
     public class InventoryContractTests
     {
         [TestCase]
-        public void InventoryEnforcesCapacityAndStacking()
+        public static void InventoryEnforcesCapacityAndStacking()
         {
             // Test 12 slot capacity limit and stacking rules
             var inventory = new Inventory();
@@ -43,7 +43,7 @@ namespace WanderlightOnline.Tests.Contract
         }
 
         [TestCase]
-        public void InventoryActionsAreAtomic()
+        public static void InventoryActionsAreAtomic()
         {
             // Test that inventory operations are atomic
             var inventory = new Inventory();
@@ -66,7 +66,7 @@ namespace WanderlightOnline.Tests.Contract
         }
 
         [TestCase]
-        public void InventoryPersistsAcrossSessions()
+        public static void InventoryPersistsAcrossSessions()
         {
             // Test that inventory state is saved and restored across sessions
             var inventory = new Inventory();
@@ -97,7 +97,7 @@ namespace WanderlightOnline.Tests.Contract
         }
 
         [TestCase]
-        public void InventoryEnforcesServerSideValidation()
+        public static void InventoryEnforcesServerSideValidation()
         {
             // Test that all inventory rules are enforced server-side
             var inventory = new Inventory();
@@ -122,7 +122,7 @@ namespace WanderlightOnline.Tests.Contract
         }
 
         [TestCase]
-        public void InventoryHandlesItemCategoriesCorrectly()
+        public static void InventoryHandlesItemCategoriesCorrectly()
         {
             // Test category-specific behavior and stacking rules
             var inventory = new Inventory();
@@ -155,7 +155,7 @@ namespace WanderlightOnline.Tests.Contract
         }
 
         [TestCase]
-        public void InventoryHandlesEdgeCases()
+        public static void InventoryHandlesEdgeCases()
         {
             // Test edge cases and error conditions
             var inventory = new Inventory();

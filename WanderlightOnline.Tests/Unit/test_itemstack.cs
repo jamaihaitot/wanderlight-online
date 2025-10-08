@@ -14,7 +14,7 @@ namespace WanderlightOnline.Tests.Unit
     {
         // Test: Constructor validates item type
         [TestCase]
-        public void ConstructorValidatesItemType()
+        public static void ConstructorValidatesItemType()
         {
             // Valid item type should work
             var stack = new ItemStack("wood", ItemCategory.Generic, 5);
@@ -23,7 +23,9 @@ namespace WanderlightOnline.Tests.Unit
             // Null item type should throw
             try
             {
-                var invalid = new ItemStack(null, ItemCategory.Generic, 1);
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type
+                var invalid = new ItemStack(null!, ItemCategory.Generic, 1);
+#pragma warning restore CS8625
                 AssertThat(false).IsTrue(); // Should not reach here
             }
             catch (ArgumentException)
@@ -56,7 +58,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Constructor trims whitespace from item type
         [TestCase]
-        public void ConstructorTrimsItemType()
+        public static void ConstructorTrimsItemType()
         {
             var stack = new ItemStack("  wood  ", ItemCategory.Generic, 1);
             AssertThat(stack.ItemType).IsEqual("wood");
@@ -64,7 +66,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Constructor validates quantity against MaxStack
         [TestCase]
-        public void ConstructorValidatesQuantity()
+        public static void ConstructorValidatesQuantity()
         {
             // Valid quantities
             var generic = new ItemStack("item", ItemCategory.Generic, 15);
@@ -123,7 +125,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: MaxStack is set correctly based on category
         [TestCase]
-        public void MaxStackSetCorrectlyByCategory()
+        public static void MaxStackSetCorrectlyByCategory()
         {
             var generic = new ItemStack("item", ItemCategory.Generic, 1);
             AssertThat(generic.MaxStack).IsEqual(20);
@@ -137,7 +139,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: AddUpTo adds items correctly
         [TestCase]
-        public void AddUpToAddsCorrectly()
+        public static void AddUpToAddsCorrectly()
         {
             var stack = new ItemStack("wood", ItemCategory.Generic, 5);
 
@@ -159,7 +161,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: AddUpTo handles overflow correctly
         [TestCase]
-        public void AddUpToHandlesOverflow()
+        public static void AddUpToHandlesOverflow()
         {
             var stack = new ItemStack("wood", ItemCategory.Generic, 17);
 
@@ -171,7 +173,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: AddUpTo handles zero and negative amounts
         [TestCase]
-        public void AddUpToHandlesInvalidAmounts()
+        public static void AddUpToHandlesInvalidAmounts()
         {
             var stack = new ItemStack("wood", ItemCategory.Generic, 5);
 
@@ -188,7 +190,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: RemoveUpTo removes items correctly
         [TestCase]
-        public void RemoveUpToRemovesCorrectly()
+        public static void RemoveUpToRemovesCorrectly()
         {
             var stack = new ItemStack("wood", ItemCategory.Generic, 10);
 
@@ -205,7 +207,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: RemoveUpTo handles insufficient quantity
         [TestCase]
-        public void RemoveUpToHandlesInsufficient()
+        public static void RemoveUpToHandlesInsufficient()
         {
             var stack = new ItemStack("wood", ItemCategory.Generic, 5);
 
@@ -217,7 +219,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: RemoveUpTo handles zero and negative amounts
         [TestCase]
-        public void RemoveUpToHandlesInvalidAmounts()
+        public static void RemoveUpToHandlesInvalidAmounts()
         {
             var stack = new ItemStack("wood", ItemCategory.Generic, 5);
 
@@ -234,7 +236,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Clone creates an independent copy
         [TestCase]
-        public void CloneCreatesIndependentCopy()
+        public static void CloneCreatesIndependentCopy()
         {
             var original = new ItemStack("wood", ItemCategory.Generic, 5);
             var clone = original.Clone();
@@ -253,7 +255,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Properties are read-only (except Quantity via operations)
         [TestCase]
-        public void PropertiesAreReadOnly()
+        public static void PropertiesAreReadOnly()
         {
             var stack = new ItemStack("wood", ItemCategory.Generic, 5);
 
@@ -272,7 +274,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Full stack can't add more
         [TestCase]
-        public void FullStackCannotAddMore()
+        public static void FullStackCannotAddMore()
         {
             var stack = new ItemStack("wood", ItemCategory.Generic, 20); // Max capacity
 
@@ -283,7 +285,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Empty stack operations
         [TestCase]
-        public void EmptyStackOperations()
+        public static void EmptyStackOperations()
         {
             var stack = new ItemStack("wood", ItemCategory.Generic, 1);
 
@@ -304,7 +306,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Equipment category stacking behavior
         [TestCase]
-        public void EquipmentStackingBehavior()
+        public static void EquipmentStackingBehavior()
         {
             var equipment = new ItemStack("sword", ItemCategory.Equipment, 1);
 
@@ -320,7 +322,7 @@ namespace WanderlightOnline.Tests.Unit
 
         // Test: Consumable category stacking behavior
         [TestCase]
-        public void ConsumableStackingBehavior()
+        public static void ConsumableStackingBehavior()
         {
             var consumable = new ItemStack("potion", ItemCategory.Consumable, 15);
 

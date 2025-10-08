@@ -1,7 +1,6 @@
 // <copyright file="PlayerController.cs" company="Wanderlight Online">
 // Copyright (c) 2025 Wanderlight Online
 // </copyright>
-// PlayerController.cs
 
 namespace WanderlightOnline
 {
@@ -50,7 +49,7 @@ namespace WanderlightOnline
             }
 
             // Update player position
-            player.Position += this.velocity * delta;
+            this.player.Position += this.velocity * delta;
         }
 
         /// <summary>
@@ -60,6 +59,7 @@ namespace WanderlightOnline
         {
             if (item == null || !item.IsPersistent || !item.InWorld)
                 return false;
+
             // Try to add the item to inventory atomically
             return this.inventory.TryAdd(item.ItemType, item.Category, item.Quantity);
         }
@@ -71,6 +71,7 @@ namespace WanderlightOnline
         {
             if (string.IsNullOrEmpty(itemType))
                 return false;
+
             // Try to remove one of the item type from inventory atomically
             return this.inventory.TryRemove(itemType, 1);
         }

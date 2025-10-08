@@ -1,14 +1,14 @@
 // <copyright file="Operator.cs" company="Wanderlight Online">
 // Copyright (c) 2025 Wanderlight Online
 // </copyright>
-// Operator.cs
+
 namespace WanderlightOnline
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using System.Text.Json;
+    using System.Threading;
 
     /// <summary>
     /// Represents log levels for structured logging.

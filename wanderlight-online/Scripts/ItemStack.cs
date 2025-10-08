@@ -1,5 +1,7 @@
+// <copyright file="ItemStack.cs" company="Wanderlight Online">
 // Copyright (c) 2025 Wanderlight Online
-// ItemStack.cs
+// </copyright>
+
 namespace WanderlightOnline
 {
     using System;

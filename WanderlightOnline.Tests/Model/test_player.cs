@@ -11,7 +11,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: Display name must be unique and follow validation rules
         // Requirements: case-insensitive uniqueness, format validation, length limits
         [TestCase]
-        public void PlayerDisplayNameValidation()
+        public static void PlayerDisplayNameValidation()
         {
             // Not implemented for Phase 3.3
             // Placeholder test body intentionally left empty.
@@ -20,7 +20,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: Position property stores 2D coordinates
         // Requirements: Vector2 type, coordinate bounds, precision
         [TestCase]
-        public void PlayerPositionProperty()
+        public static void PlayerPositionProperty()
         {
             // Not implemented for Phase 3.3
             // Placeholder test body intentionally left empty.
@@ -29,7 +29,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: Inventory relationship is properly established
         // Requirements: One-to-one relationship, non-null inventory, initialization
         [TestCase]
-        public void PlayerInventoryRelationship()
+        public static void PlayerInventoryRelationship()
         {
             // Arrange: New Player entity
             // Act: Create a player and access inventory property
@@ -48,7 +48,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: Connection state manages player lifecycle
         // Requirements: State transitions, persistence, timeout handling
         [TestCase]
-        public void PlayerConnectionStateManagement()
+        public static void PlayerConnectionStateManagement()
         {
             // Not implemented for Phase 3.3
             // Placeholder test body intentionally left empty.
@@ -57,7 +57,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: Reservation status prevents name conflicts
         // Requirements: Temporary name holding, expiration, cleanup
         [TestCase]
-        public void PlayerNameReservationStatus()
+        public static void PlayerNameReservationStatus()
         {
             // Not implemented for Phase 3.3
             // Placeholder test body intentionally left empty.
@@ -66,7 +66,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: Player state serialization for persistence
         // Requirements: Complete state capture, deserialization accuracy
         [TestCase]
-        public void PlayerStateSerialization()
+        public static void PlayerStateSerialization()
         {
             // Not implemented for Phase 3.3
             // Placeholder test body intentionally left empty.

@@ -95,7 +95,7 @@ namespace WanderlightOnline.Tests.Contract
             // Get the player and verify it exists
             var player = _playerManager.GetPlayer("TestPlayer");
             AssertThat(player).IsNotNull();
-            AssertThat(player.DisplayName).IsEqual("TestPlayer");
+            AssertThat(player!.DisplayName).IsEqual("TestPlayer");
 
             // Note: This test verifies player creation. Spawn location setting would be handled
             // by the actual PlayerManager implementation when integrated with game world.
@@ -117,8 +117,8 @@ namespace WanderlightOnline.Tests.Contract
             var player = _playerManager.GetPlayer("TestPlayer");
             AssertThat(player).IsNotNull();
             // Simulate state changes (would be handled by game logic)
-            player.Position = new WanderlightOnline.Vector2(1, 2);
-            player.Inventory = new Inventory();
+            player!.Position = new WanderlightOnline.Vector2(1, 2);
+            player!.Inventory = new Inventory();
 
             // Simulate disconnect
             _playerManager.RemovePlayer("TestPlayer");
@@ -164,7 +164,7 @@ namespace WanderlightOnline.Tests.Contract
             // This test documents the contract requirement for atomic inventory actions
             // The actual implementation would be in the Inventory class with proper concurrency control
             // For now, we verify the player has an inventory property that can be set
-            AssertThat(player.Inventory).IsNotNull(); // Initially null, can be set
+            AssertThat(player!.Inventory).IsNotNull(); // Initially null, can be set
         }
     }
 }

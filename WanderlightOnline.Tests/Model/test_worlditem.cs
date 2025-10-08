@@ -11,7 +11,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: WorldItem has all required properties for game mechanics
         // Requirements: item_type, position, stack_size, owner, persistence_status
         [TestCase]
-        public void WorldItemRequiredProperties()
+        public static void WorldItemRequiredProperties()
         {
             // Arrange
             var position = new WanderlightOnline.Vector2(10.5f, -2.25f);
@@ -33,7 +33,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: Position determines world coordinates for rendering and collision
         // Requirements: Vector2 precision, coordinate validation, bounds
         [TestCase]
-        public void WorldItemPositionManagement()
+        public static void WorldItemPositionManagement()
         {
             // Arrange
             var item = new WorldItem("Wood", ItemCategory.Generic, 10, new WanderlightOnline.Vector2());
@@ -56,7 +56,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: Stack size follows same rules as inventory stacking
         // Requirements: Category-based limits, validation, overflow handling
         [TestCase]
-        public void WorldItemStackSizeValidation()
+        public static void WorldItemStackSizeValidation()
         {
             // Arrange & Act
             var consumable = new WorldItem("Potion", ItemCategory.Consumable, 20, new WanderlightOnline.Vector2());
@@ -97,7 +97,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: Owner property tracks pickup state and reservation
         // Requirements: Null for dropped items, display_name for picked up items
         [TestCase]
-        public void WorldItemOwnershipTracking()
+        public static void WorldItemOwnershipTracking()
         {
             var item = new WorldItem("Potion", ItemCategory.Consumable, 3, new WanderlightOnline.Vector2());
 
@@ -128,7 +128,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: Persistence status controls database storage behavior
         // Requirements: Persistence flag, cleanup rules, temporary items
         [TestCase]
-        public void WorldItemPersistenceManagement()
+        public static void WorldItemPersistenceManagement()
         {
             var persistentItem = new WorldItem("Relic", ItemCategory.Equipment, 1, new WanderlightOnline.Vector2(), isPersistent: true);
             var tempItem = new WorldItem("Leaf", ItemCategory.Generic, 1, new WanderlightOnline.Vector2(), isPersistent: false);
@@ -146,7 +146,7 @@ namespace WanderlightOnline.Tests.Model
         // Model: WorldItem lifecycle from drop to pickup
         // Requirements: State transitions, validation, cleanup
         [TestCase]
-        public void WorldItemLifecycleManagement()
+        public static void WorldItemLifecycleManagement()
         {
             var dropPos = new WanderlightOnline.Vector2(5f, 6f);
             var item = new WorldItem("Wood", ItemCategory.Generic, 2, dropPos);

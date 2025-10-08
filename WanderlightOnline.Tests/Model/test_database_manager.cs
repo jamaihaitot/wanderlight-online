@@ -10,7 +10,7 @@ namespace WanderlightOnline.Tests.Model
     public class DatabaseManagerModelTests
     {
         [TestCase]
-        public void SaveAndLoadPlayerWorks()
+        public static void SaveAndLoadPlayerWorks()
         {
             var db = DatabaseManager.Instance;
             var player = new Player("Alice") { Position = new Vector2(10, 20) };
@@ -38,7 +38,7 @@ namespace WanderlightOnline.Tests.Model
         }
 
         [TestCase]
-        public void SaveAndLoadWorldItemWorks()
+        public static void SaveAndLoadWorldItemWorks()
         {
             var db = DatabaseManager.Instance;
             var item = new WorldItem("Sword", ItemCategory.Equipment, 1, new Vector2(5, 5), false);
@@ -52,7 +52,7 @@ namespace WanderlightOnline.Tests.Model
         }
 
         [TestCase]
-        public void SaveAndLoadPlayerStateWorks()
+        public static void SaveAndLoadPlayerStateWorks()
         {
             var db = DatabaseManager.Instance;
             var player = new Player("Bob") { Position = new Vector2(15, 25) };

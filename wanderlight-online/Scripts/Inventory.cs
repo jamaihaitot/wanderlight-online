@@ -1,5 +1,7 @@
+// <copyright file="Inventory.cs" company="Wanderlight Online">
 // Copyright (c) 2025 Wanderlight Online
-// Inventory.cs
+// </copyright>
+
 namespace WanderlightOnline
 {
     using System;

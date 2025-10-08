@@ -11,7 +11,7 @@ namespace WanderlightOnline.Tests.Integration
     {
         // Integration: Item pickup operations are fully atomic
         [TestCase]
-        public void ItemPickupOperationsAtomic()
+        public static void ItemPickupOperationsAtomic()
         {
             // Arrange: WorldItem available for pickup
             var worldItem = new WorldItem("TestItem", ItemCategory.Generic, 5, new Vector2(10, 10), true);
@@ -31,7 +31,7 @@ namespace WanderlightOnline.Tests.Integration
 
         // Integration: Item drop operations maintain consistency
         [TestCase]
-        public void ItemDropOperationsConsistent()
+        public static void ItemDropOperationsConsistent()
         {
             // Arrange: Player with items in inventory
             var playerManager = new PlayerManager();
@@ -51,7 +51,7 @@ namespace WanderlightOnline.Tests.Integration
 
         // Integration: Item transfer between inventories is atomic
         [TestCase]
-        public void ItemTransferBetweenInventoriesAtomic()
+        public static void ItemTransferBetweenInventoriesAtomic()
         {
             // Arrange: Two players with inventories
             var inv1 = new Inventory();
@@ -70,7 +70,7 @@ namespace WanderlightOnline.Tests.Integration
 
         // Integration: Item stacking operations handle race conditions
         [TestCase]
-        public void ItemStackingRaceConditions()
+        public static void ItemStackingRaceConditions()
         {
             // Arrange: Inventory with stackable items
             var inventory = new Inventory();
@@ -88,7 +88,7 @@ namespace WanderlightOnline.Tests.Integration
 
         // Integration: Item operations during network instability
         [TestCase]
-        public void ItemOperationsDuringNetworkInstability()
+        public static void ItemOperationsDuringNetworkInstability()
         {
             // Arrange: Inventory with items
             var inventory = new Inventory();
@@ -104,7 +104,7 @@ namespace WanderlightOnline.Tests.Integration
 
         // Integration: Complex multi-step item operations atomicity
         [TestCase]
-        public void ComplexItemOperationsAtomicity()
+        public static void ComplexItemOperationsAtomicity()
         {
             // Arrange: Inventory with multiple items
             var inventory = new Inventory();

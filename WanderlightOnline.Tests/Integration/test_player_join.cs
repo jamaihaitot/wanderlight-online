@@ -13,7 +13,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Complete player join authentication pipeline
         // Components: NetworkManager, PlayerManager, DatabaseManager, Operator logging
         [TestCase]
-        public void PlayerJoinAuthenticationPipeline()
+        public static void PlayerJoinAuthenticationPipeline()
         {
             // Arrange: Full system components (Network, Player, Database managers)
             var playerManager = new PlayerManager();
@@ -45,7 +45,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Player join rejection scenarios
         // Components: Validation, error handling, cleanup
         [TestCase]
-        public void PlayerJoinRejectionHandling()
+        public static void PlayerJoinRejectionHandling()
         {
             // Arrange: System with existing player data and validation rules
             var playerManager = new PlayerManager();
@@ -71,7 +71,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Concurrent player join handling
         // Components: Race condition prevention, atomicity, resource management
         [TestCase]
-        public void ConcurrentPlayerJoinHandling()
+        public static void ConcurrentPlayerJoinHandling()
         {
             // Arrange: Multiple simultaneous join attempts
             var playerManager = new PlayerManager();
@@ -100,7 +100,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Player join state restoration after disconnect
         // Components: Session management, state persistence, reconnection logic
         [TestCase]
-        public void PlayerReconnectionStateRestoration()
+        public static void PlayerReconnectionStateRestoration()
         {
             // Arrange: Player with existing session and game state
             var playerManager = new PlayerManager();
@@ -127,7 +127,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Join flow telemetry and monitoring
         // Components: Operator metrics, structured logging, performance tracking
         [TestCase]
-        public void PlayerJoinTelemetryCollection()
+        public static void PlayerJoinTelemetryCollection()
         {
             // Arrange: System with telemetry collection active
             using var @operator = new Operator();
@@ -166,7 +166,7 @@ namespace WanderlightOnline.Tests.Integration
         // Integration: Join flow with full game world initialization
         // Components: World state, spawn positioning, initial inventory setup
         [TestCase]
-        public void PlayerJoinWorldInitialization()
+        public static void PlayerJoinWorldInitialization()
         {
             // Arrange: Game world with spawn points and initial state
             var playerManager = new PlayerManager();
