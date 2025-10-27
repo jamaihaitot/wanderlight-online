@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://bn8p2xq7u84k1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 16.0
+
+[node name="RemotePlayer" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.784314, 0.392157, 0.196078, 1)
+scale = Vector2(32, 32)
+texture = SubResource("CircleShape2D_1")
+
+[node name="DisplayNameLabel" type="Label" parent="."]
+offset_left = -50.0
+offset_top = -30.0
+offset_right = 50.0
+offset_bottom = -15.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "RemotePlayer"
+horizontal_alignment = 1
